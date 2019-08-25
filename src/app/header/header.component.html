@@ -1,0 +1,28 @@
+<mat-toolbar>
+    <mat-toolbar-row *ngIf="connect===true">
+        <span>First Row</span>
+    </mat-toolbar-row>
+
+    <mat-toolbar-row class="navbar">
+        <div>SA Transfert</div>
+        <div>
+            <span><button mat-flat-button [matMenuTriggerFor]="appMenu"><i class="fas fa-handshake"></i> Partenaire</button></span>
+            <span><button mat-flat-button [matMenuTriggerFor]="appMenu"><mat-icon>person</mat-icon>Utilisateur</button></span>
+            <span><button mat-flat-button [matMenuTriggerFor]="appMenu"><mat-icon>account_balance</mat-icon>Compte</button></span>
+            <span><button mat-flat-button [matMenuTriggerFor]="appMenu"><mat-icon>attach_money</mat-icon>Versement</button></span>
+            <span><button mat-flat-button [matMenuTriggerFor]="transactionMenu"><mat-icon>swap_horiz</mat-icon>Transaction</button></span>
+            <span><button mat-flat-button ><mat-icon>exit_to_app</mat-icon>Deconnexion</button></span>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>
+<mat-menu #appMenu="matMenu">
+    <button mat-menu-item><mat-icon>add_circle_outline</mat-icon>Ajouter</button>
+    <button mat-menu-item><mat-icon>list</mat-icon>Lister</button>
+    <button mat-menu-item><mat-icon>search</mat-icon>Rechercher</button>
+</mat-menu>
+<mat-menu #transactionMenu="matMenu">
+    <button mat-menu-item><mat-icon>trending_up</mat-icon>Envoi</button>
+    <button mat-menu-item><mat-icon>trending_down</mat-icon>Retrait</button>
+    <button mat-menu-item><mat-icon>list</mat-icon>Lister</button>
+    <button mat-menu-item><mat-icon>search</mat-icon>Rechercher</button>
+</mat-menu>
