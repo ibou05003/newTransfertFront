@@ -22,6 +22,9 @@ import { VersementListComponent } from './versement/versement-list/versement-lis
 import { VersementListParCompteComponent } from './versement/versement-list-par-compte/versement-list-par-compte.component';
 import { CompteListParPartenaireComponent } from './compte/compte-list-par-partenaire/compte-list-par-partenaire.component';
 import { UsersListParCompteComponent } from './compte/users-list-par-compte/users-list-par-compte.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -42,13 +45,16 @@ import { UsersListParCompteComponent } from './compte/users-list-par-compte/user
     VersementListComponent,
     VersementListParCompteComponent,
     CompteListParPartenaireComponent,
-    UsersListParCompteComponent
+    UsersListParCompteComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

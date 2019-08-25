@@ -1,4 +1,4 @@
-<mat-toolbar>
+<mat-toolbar *ngIf="isAuthenticated()">
     <mat-toolbar-row *ngIf="connect===true">
         <span>First Row</span>
     </mat-toolbar-row>
