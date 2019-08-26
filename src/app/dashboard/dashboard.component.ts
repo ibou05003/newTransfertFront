@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../service/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,9 +9,36 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  constructor(private auth: AuthService,
+    private router: Router){}
+ngOnInit() {
+}
+isAuthenticated(){
+return this.auth.isAuthenticated()
+}
 
-  ngOnInit() {
-  }
+isSuperAdminWari(){
+return this.auth.isSuperAdminWari()
+}
+isAdminWari(){
+return this.auth.isAdminWari()
+}
+isCaissier(){
+return this.auth.isCaissier()
+}
+isSuperAdminPartenaire(){
+return this.auth.isSuperAdminPartenaire()
+}
+isAdminPartenaire(){
+return this.auth.isAdminPartenaire()
+}
+isUser(){
+return this.auth.isUser()
+}
+
+logout(){
+this.auth.logout()
+return this.router.navigate(['/login'])
+}
 
 }

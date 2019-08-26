@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   hide=true
   loginUserData= {}
+  errorMsg= ''
 
   constructor(private auth: AuthService,
               private router: Router) { }
@@ -24,7 +25,12 @@ export class LoginComponent implements OnInit {
           this.auth.saveToken(jwt)
           this.router.navigate(['/dashboard'])
         },
-        error=>console.log(error)
+        error=>{
+          this.errorMsg=error.statusText
+          if(this.errorMsg=='Unauthorized'){
+            this.errorMsg='Login ou Mot de Passe incorrect'
+          }
+        }
       )
   }
 

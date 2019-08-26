@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { JwtHelperService } from "@auth0/angular-jwt";
-import { Router } from '@angular/router';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +14,14 @@ export class AuthService {
   jwt:string
   username:string
   roles: Array <string>
-  constructor(private http:HttpClient,
-              private router: Router) { }
+  constructor(private http:HttpClient) { }
 
   loginUser(user){
     return this.http.post<any>(this.loginUrl,user,{observe:'response'})
+    .pipe(catchError(this.errorHandler))
+  }
+  errorHandler(error: HttpErrorResponse) {
+    return throwError(error)
   }
   saveToken(jwt: string){
     localStorage.setItem('token',jwt.token)
@@ -55,7 +59,6 @@ export class AuthService {
   }
   logout(){
     localStorage.removeItem('token')
-    this.router.navigate(['/login'])
   }
   loadToken() {
     this.jwt=localStorage.getItem('token')

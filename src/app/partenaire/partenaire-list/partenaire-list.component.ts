@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PartenaireService } from 'src/app/service/partenaire.service';
 
 @Component({
   selector: 'app-partenaire-list',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PartenaireListComponent implements OnInit {
 
-  constructor() { }
+  public partenaires=[]
+
+  constructor(private partenaireService: PartenaireService) { }
 
   ngOnInit() {
+    this.partenaireService.getPartenaires()
+        .subscribe(
+          data=>this.partenaires =data
+        );
   }
 
 }
