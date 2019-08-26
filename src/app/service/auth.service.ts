@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { JwtHelperService } from "@auth0/angular-jwt";
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -12,25 +13,24 @@ export class AuthService {
   jwt:string
   username:string
   roles: Array <string>
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient,
+              private router: Router) { }
 
   loginUser(user){
     return this.http.post<any>(this.loginUrl,user,{observe:'response'})
   }
   saveToken(jwt: string){
-    localStorage.setItem('token',jwt)
-    this.jwt=jwt
-    this.parseJWT()
-  }
-  parseJWT(){
+    localStorage.setItem('token',jwt.token)
+    this.jwt=jwt.token
     let jwtHelper= new JwtHelperService()
     let jwtObj=jwtHelper.decodeToken(this.jwt)
-    this.username=jwtObj.obj
+    this.username=jwtObj.username
     this.roles=jwtObj.roles
   }
+  
 
   isAuthenticated(){
-    return this.roles && (this.isAdminPartenaire || this.isAdminWari || this.isCaissier || this.isSuperAdminPartenaire || this.isSuperAdminWari || this.isUser)
+    return this.roles && (this.isAdminPartenaire() || this.isAdminWari() || this.isCaissier() || this.isSuperAdminPartenaire() || this.isSuperAdminWari() || this.isUser())
   }
   isSuperAdminWari(){
     return this.roles.indexOf('ROLE_SuperAdminWari')>=0
@@ -49,5 +49,19 @@ export class AuthService {
   }
   isUser(){
     return this.roles.indexOf('ROLE_UserSimple')>=0
+  }
+  getToken(){
+    return localStorage.getItem('token')
+  }
+  logout(){
+    localStorage.removeItem('token')
+    this.router.navigate(['/login'])
+  }
+  loadToken() {
+    this.jwt=localStorage.getItem('token')
+    let jwtHelper= new JwtHelperService()
+    let jwtObj=jwtHelper.decodeToken(this.jwt)
+    this.username=jwtObj.username
+    this.roles=jwtObj.roles
   }
 }

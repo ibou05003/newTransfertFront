@@ -24,7 +24,10 @@ import { CompteListParPartenaireComponent } from './compte/compte-list-par-parte
 import { UsersListParCompteComponent } from './compte/users-list-par-compte/users-list-par-compte.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthService } from './service/auth.service';
+import { AuthGuard } from './auth.guard';
+import { TokenInterceptorService } from './service/token-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -56,7 +59,12 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [AuthService,AuthGuard,
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptorService,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

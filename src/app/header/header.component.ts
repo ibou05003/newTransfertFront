@@ -35,6 +35,8 @@ export class HeaderComponent implements OnInit {
     return this.auth.isUser()
   }
 
-
+  logout(){
+    return this.auth.logout()
+  }
 
 }

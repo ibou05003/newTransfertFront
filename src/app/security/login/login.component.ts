@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/service/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -7,19 +8,21 @@ import { AuthService } from 'src/app/service/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  loginUserData={}
-  hide = true
+  hide=true
+  loginUserData= {}
 
-  constructor(private auth: AuthService) { }
+  constructor(private auth: AuthService,
+              private router: Router) { }
 
   ngOnInit() {
   }
-  loginUser(loginUserData){
+  loginUser(){
     this.auth.loginUser(this.loginUserData)
       .subscribe(
         res=>{
-          let jwt=res.headers.get('Authorization')
+          let jwt=res.body
           this.auth.saveToken(jwt)
+          this.router.navigate(['/dashboard'])
         },
         error=>console.log(error)
       )

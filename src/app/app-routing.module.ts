@@ -10,6 +10,7 @@ import { PartenaireListComponent } from './partenaire/partenaire-list/partenaire
 import { CompteListComponent } from './compte/compte-list/compte-list.component';
 import { VersementAjoutComponent } from './versement/versement-ajout/versement-ajout.component';
 import { VersementListComponent } from './versement/versement-list/versement-list.component';
+import { AuthGuard } from './auth.guard';
 
 
 const routes: Routes = [
@@ -17,31 +18,31 @@ const routes: Routes = [
     path: '' , redirectTo: '/dashboard', pathMatch: 'full'
   },
   {
-    path: 'dashboard' , component: DashboardComponent
+    path: 'dashboard' , component: DashboardComponent, canActivate: [AuthGuard]
   },
   {
     path: 'login' , component: LoginComponent
   },
   {
-    path: 'register' , component: UserComponent
+    path: 'register' , component: UserComponent, canActivate: [AuthGuard]
   },
   {
-    path: 'compte/ajout' , component: CompteAjoutComponent
+    path: 'compte/ajout' , component: CompteAjoutComponent, canActivate: [AuthGuard]
   },
   {
-    path: 'partenaire/ajout' , component: PartenaireAjoutComponent
+    path: 'partenaire/ajout' , component: PartenaireAjoutComponent, canActivate: [AuthGuard]
   },
   {
-    path: 'partenaire/list' , component: PartenaireListComponent
+    path: 'partenaire/list' , component: PartenaireListComponent, canActivate: [AuthGuard]
   },
   {
-    path: 'compte/list' , component: CompteListComponent
+    path: 'compte/list' , component: CompteListComponent, canActivate: [AuthGuard]
   },
   {
-    path: 'versement/ajout' , component: VersementAjoutComponent
+    path: 'versement/ajout' , component: VersementAjoutComponent, canActivate: [AuthGuard]
   },
   {
-    path: 'versement/list' , component: VersementListComponent
+    path: 'versement/list' , component: VersementListComponent, canActivate: [AuthGuard]
   },
   {
     path: "**" , component: PageNotFoundComponent

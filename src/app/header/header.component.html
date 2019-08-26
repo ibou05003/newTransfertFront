@@ -6,12 +6,12 @@
     <mat-toolbar-row class="navbar">
         <div>SA Transfert</div>
         <div>
-            <span><button mat-flat-button [matMenuTriggerFor]="appMenu"><i class="fas fa-handshake"></i> Partenaire</button></span>
-            <span><button mat-flat-button [matMenuTriggerFor]="appMenu"><mat-icon>person</mat-icon>Utilisateur</button></span>
-            <span><button mat-flat-button [matMenuTriggerFor]="appMenu"><mat-icon>account_balance</mat-icon>Compte</button></span>
-            <span><button mat-flat-button [matMenuTriggerFor]="appMenu"><mat-icon>attach_money</mat-icon>Versement</button></span>
-            <span><button mat-flat-button [matMenuTriggerFor]="transactionMenu"><mat-icon>swap_horiz</mat-icon>Transaction</button></span>
-            <span><button mat-flat-button ><mat-icon>exit_to_app</mat-icon>Deconnexion</button></span>
+            <span><button *ngIf="isSuperAdminWari()" mat-flat-button [matMenuTriggerFor]="appMenu"><i class="fas fa-handshake"></i> Partenaire</button></span>
+            <span><button *ngIf="isSuperAdminWari()" mat-flat-button [matMenuTriggerFor]="appMenu"><mat-icon>person</mat-icon>Utilisateur</button></span>
+            <span><button *ngIf="isSuperAdminWari()" mat-flat-button [matMenuTriggerFor]="appMenu"><mat-icon>account_balance</mat-icon>Compte</button></span>
+            <span><button *ngIf="isCaissier()" mat-flat-button [matMenuTriggerFor]="appMenu"><mat-icon>attach_money</mat-icon>Versement</button></span>
+            <span><button *ngIf="isSuperAdminPartenaire()" mat-flat-button [matMenuTriggerFor]="transactionMenu"><mat-icon>swap_horiz</mat-icon>Transaction</button></span>
+            <span><button (click)="logout()" mat-flat-button ><mat-icon>exit_to_app</mat-icon>Deconnexion</button></span>
         </div>
     </mat-toolbar-row>
 </mat-toolbar>
