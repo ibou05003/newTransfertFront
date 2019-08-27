@@ -1,1 +1,110 @@
-<p>partenaire-ajout works!</p>
+<app-header></app-header>
+<form [formGroup]="partenaireForm">
+    <div class="container pt-5">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1>Ajouter Un Partenaire</h1>
+            </div>
+        </div>
+        <mat-horizontal-stepper>
+            <div class="col-12 col-md-6 offset-md-3">
+                <div class="container pt-5">
+                    <mat-step label="Informations Entreprise">
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <mat-form-field class="col-12" hideRequiredMarker>
+                                    <span matPrefix><mat-icon>business</mat-icon></span>
+                                    <input matInput placeholder="Entrer la Raison Sociale" required formControlName="raisonSociale">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <mat-form-field class="col-12" hideRequiredMarker>
+                                    <span matPrefix><mat-icon>business</mat-icon></span>
+                                    <input matInput placeholder="Entrer le NINEA" required formControlName="ninea">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <mat-form-field class="col-12" hideRequiredMarker>
+                                    <span matPrefix><i class="fas fa-map-marker-alt"></i></span>
+                                    <input matInput placeholder="Entrer l'adresse du Siege" required formControlName="adresseSociale">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <mat-form-field class="col-12" hideRequiredMarker>
+                                    <span matPrefix><mat-icon>phone</mat-icon></span>
+                                    <input matInput type="number" placeholder="Entrer le Téléphone du Siège" required formControlName="telephoneSiege">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <mat-form-field class="col-12" hideRequiredMarker>
+                                    <span matPrefix><i class="fas fa-at"></i></span>
+                                    <input matInput type="email" placeholder="Entrer l'adresse mail" required formControlName="emailSiege">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <mat-form-field class="col-12" hideRequiredMarker>
+                                    <span matPrefix><mat-icon>business</mat-icon></span>
+                                    <textarea matInput placeholder="Description" required formControlName="description"></textarea>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <button mat-button matStepperNext>Next</button>
+                        </div>
+                    </mat-step>
+                    <mat-step label="Informations Personne de Référence">
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <mat-form-field class="col-12" hideRequiredMarker>
+                                    <span matPrefix><i class="far fa-address-card"></i></span>
+                                    <input matInput placeholder="Nom Complet" required formControlName="nomCompletPersonneRef">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <mat-form-field class="col-12" hideRequiredMarker>
+                                    <span matPrefix><mat-icon>phone</mat-icon></span>
+                                    <input matInput type="number" placeholder="Entrer le Téléphone" required formControlName="telephoneRef">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <mat-form-field class="col-12" hideRequiredMarker>
+                                    <span matPrefix><i class="far fa-address-card"></i></span>
+                                    <input matInput type="number" placeholder="Entrer le CNI" required formControlName="cniPersonneRef">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <mat-form-field class="col-12" hideRequiredMarker>
+                                    <span matPrefix><i class="fas fa-at"></i></span>
+                                    <input matInput type="email" placeholder="Entrer l'adresse email" required formControlName="emailPersonneRef">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <mat-form-field class="col-12" hideRequiredMarker>
+                                    <span matPrefix><i class="fas fa-map-marker-alt"></i></span>
+                                    <input matInput placeholder="Entrer l'adresse" required formControlName="adressePersonneRef">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <button mat-button matStepperPrevious>Back</button>
+                            <button mat-button matStepperNext>Next</button>
+                        </div>
+                    </mat-step>
+                    <mat-step label="Validation">
+                        <div class="text-center">
+                            <button (click)="setPartenaire()" type="submit" class="btn btn-success">Ajouter Partenaire</button>
+                        </div>
+                    </mat-step>
+                </div>
+            </div>
+        </mat-horizontal-stepper>
+    </div>
+</form>

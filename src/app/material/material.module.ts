@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { MatButtonModule, MatIconModule, MatToolbarModule, MatMenuModule, MatCardModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatButtonModule, MatIconModule, MatToolbarModule, MatMenuModule, MatCardModule, MatFormFieldModule, MatInputModule, MatStepperModule } from '@angular/material';
 import { MatFileUploadModule } from 'angular-material-fileupload';
 
 const MaterialComponents= [
@@ -10,7 +10,8 @@ const MaterialComponents= [
   MatCardModule,
   MatFormFieldModule,
   MatInputModule,
-  MatFileUploadModule
+  MatFileUploadModule,
+  MatStepperModule
 ]
 
 

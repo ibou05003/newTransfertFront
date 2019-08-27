@@ -1,6 +1,6 @@
 export interface Partenaire {
     id:number,
-    raisonSonciale: string,
+    raisonSociale: string,
     ninea: string,
     adresseSociale: string,
     telephoneSiege: number,

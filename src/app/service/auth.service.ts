@@ -24,8 +24,8 @@ export class AuthService {
     return throwError(error)
   }
   saveToken(jwt: string){
-    localStorage.setItem('token',jwt.token)
-    this.jwt=jwt.token
+    localStorage.setItem('token',jwt['token'])
+    this.jwt=jwt['token']
     let jwtHelper= new JwtHelperService()
     let jwtObj=jwtHelper.decodeToken(this.jwt)
     this.username=jwtObj.username

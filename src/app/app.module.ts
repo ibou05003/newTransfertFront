@@ -23,7 +23,7 @@ import { VersementListParCompteComponent } from './versement/versement-list-par-
 import { CompteListParPartenaireComponent } from './compte/compte-list-par-partenaire/compte-list-par-partenaire.component';
 import { UsersListParCompteComponent } from './compte/users-list-par-compte/users-list-par-compte.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthService } from './service/auth.service';
 import { AuthGuard } from './auth.guard';
@@ -57,6 +57,7 @@ import { TokenInterceptorService } from './service/token-interceptor.service';
     BrowserAnimationsModule,
     MaterialModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule
   ],
   providers: [AuthService,AuthGuard,
