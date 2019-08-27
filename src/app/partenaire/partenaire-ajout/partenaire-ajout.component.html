@@ -86,10 +86,16 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-12 col-md-6">
                                 <mat-form-field class="col-12" hideRequiredMarker>
                                     <span matPrefix><i class="fas fa-map-marker-alt"></i></span>
                                     <input matInput placeholder="Entrer l'adresse" required formControlName="adressePersonneRef">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <mat-form-field class="col-12">
+                                    <span matPrefix><i class="fas fa-map-marker-alt"></i></span>
+                                    <input matInput type="file" placeholder="image" formControlName="imageFile">
                                 </mat-form-field>
                             </div>
                         </div>
