@@ -1,28 +1,82 @@
-<mat-toolbar *ngIf="isAuthenticated()">
-    <mat-toolbar-row *ngIf="isAdminPartenaire()">
-        <span>First Row</span>
-    </mat-toolbar-row>
-
-    <mat-toolbar-row class="navbar">
-        <div>SA Transfert</div>
-        <div>
-            <span><button *ngIf="isSuperAdminWari()  || isAdminWari()" mat-flat-button [matMenuTriggerFor]="appMenu"><i class="fas fa-handshake"></i> Partenaire</button></span>
-            <span><button *ngIf="isSuperAdminWari()  || isAdminWari()  || isSuperAdminPartenaire() || isAdminPartenaire()" mat-flat-button [matMenuTriggerFor]="appMenu"><mat-icon>person</mat-icon>Utilisateur</button></span>
-            <span><button *ngIf="isSuperAdminWari()  || isAdminWari()" mat-flat-button [matMenuTriggerFor]="appMenu"><mat-icon>account_balance</mat-icon>Compte</button></span>
-            <span><button *ngIf="isCaissier()" mat-flat-button [matMenuTriggerFor]="appMenu"><mat-icon>attach_money</mat-icon>Versement</button></span>
-            <span><button *ngIf="isSuperAdminPartenaire() || isAdminPartenaire() || isUser()" mat-flat-button [matMenuTriggerFor]="transactionMenu"><mat-icon>swap_horiz</mat-icon>Transaction</button></span>
-            <span><button (click)="logout()" mat-flat-button ><mat-icon>exit_to_app</mat-icon>Deconnexion</button></span>
+<div class="header bg-light py-2" *ngIf="isSuperAdminPartenaire() || isAdminPartenaire() || isUser()">
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                Compte N° :
+            </div>
+            <div class="col-6 text-right">
+                Solde: 000 000 0000
+            </div>
         </div>
-    </mat-toolbar-row>
-</mat-toolbar>
-<mat-menu #appMenu="matMenu">
-    <button mat-menu-item><mat-icon>add_circle_outline</mat-icon>Ajouter</button>
-    <button mat-menu-item><mat-icon>list</mat-icon>Lister</button>
-    <button mat-menu-item><mat-icon>search</mat-icon>Rechercher</button>
-</mat-menu>
-<mat-menu #transactionMenu="matMenu">
-    <button mat-menu-item><mat-icon>trending_up</mat-icon>Envoi</button>
-    <button mat-menu-item><mat-icon>trending_down</mat-icon>Retrait</button>
-    <button mat-menu-item><mat-icon>list</mat-icon>Lister</button>
-    <button mat-menu-item><mat-icon>search</mat-icon>Rechercher</button>
-</mat-menu>
+        <!--/row-->
+    </div>
+    <!--container-->
+</div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" routerLink="/">SA TRANSFERT</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/">Home </a>
+            </li>
+            <li *ngIf="isSuperAdminWari()  || isAdminWari()" class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-handshake"></i> Partenaire
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" routerLink="/partenaire/ajout"><i class="fas fa-plus-circle"></i>Ajouter</a>
+                    <a class="dropdown-item" routerLink="/partenaire/list"><i class="fas fa-list"></i>Lister</a>
+                </div>
+            </li>
+            <li *ngIf="isSuperAdminWari()  || isAdminWari()  || isSuperAdminPartenaire() || isAdminPartenaire()" class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-user"></i>Utilisateur
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" routerLink="/register"><i class="fas fa-plus-circle"></i>Ajouter</a>
+                    <a class="dropdown-item" routerLink="/"><i class="fas fa-list"></i>Lister</a>
+                </div>
+            </li>
+            <li *ngIf="isSuperAdminWari()  || isAdminWari()" class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="far fa-credit-card"></i>Compte
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" routerLink="/compte/ajout"><i class="fas fa-plus-circle"></i>Ajouter</a>
+                    <a class="dropdown-item" routerLink="/compte/list"><i class="fas fa-list"></i>Lister</a>
+                </div>
+            </li>
+            <li *ngIf="isCaissier()" class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-comment-dollar acceuil"></i>Versement
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" routerLink="/versement/ajout"><i class="fas fa-plus-circle"></i>Ajouter</a>
+                    <a class="dropdown-item" routerLink="/versement/list"><i class="fas fa-list"></i>Lister</a>
+                </div>
+            </li>
+            <li *ngIf="isSuperAdminPartenaire() || isAdminPartenaire() || isUser()" class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-exchange-alt"></i>Transaction
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#"><i class="fas fa-plus-circle"></i>Ajouter</a>
+                    <a class="dropdown-item" href="#"><i class="fas fa-list"></i>Lister</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown pr-3">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="assets/avatar.png" class="rounded-circle" alt="avatar" width="30px">
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#"><i class="fas fa-plus-circle"></i>Profil</a>
+                    <a class="dropdown-item" (click)="logout()"><i class="fas fa-list"></i>Déconnexion</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>

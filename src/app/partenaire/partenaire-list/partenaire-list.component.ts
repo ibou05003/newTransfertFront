@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PartenaireService } from 'src/app/service/partenaire.service';
+import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { Partenaire } from 'src/app/interface/partenaire';
 
 @Component({
   selector: 'app-partenaire-list',
@@ -9,6 +11,10 @@ import { PartenaireService } from 'src/app/service/partenaire.service';
 export class PartenaireListComponent implements OnInit {
 
   public partenaires=[]
+  displayedColumns: string[] = ['id', 'raisonSociale', 'ninea', 'adresseSociale', 'telephoneSiege', 'emailSiege', 'description'];
+  dataSource: MatTableDataSource<Partenaire>;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(private partenaireService: PartenaireService) { }
 
@@ -17,6 +23,16 @@ export class PartenaireListComponent implements OnInit {
         .subscribe(
           data=>this.partenaires =data
         );
+        this.dataSource = new MatTableDataSource(this.partenaires);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+  }
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
 }

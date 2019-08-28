@@ -28,6 +28,7 @@ export class AuthService {
     this.jwt=jwt['token']
     let jwtHelper= new JwtHelperService()
     let jwtObj=jwtHelper.decodeToken(this.jwt)
+    console.log(jwtObj)
     this.username=jwtObj.username
     this.roles=jwtObj.roles
   }
