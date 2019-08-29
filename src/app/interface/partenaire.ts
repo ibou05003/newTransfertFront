@@ -12,5 +12,6 @@ export interface Partenaire {
     cniPersonneRef: number,
     adressePersonneRef: string,
     status: string,
-    imageFile:any
+    imageFile:File,
+    action:string
 }

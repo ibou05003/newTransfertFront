@@ -12,7 +12,7 @@
     </div>
     <!--container-->
 </div>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark back">
     <a class="navbar-brand" routerLink="/">SA TRANSFERT</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
@@ -41,13 +41,14 @@
                     <a class="dropdown-item" routerLink="/"><i class="fas fa-list"></i>Lister</a>
                 </div>
             </li>
-            <li *ngIf="isSuperAdminWari()  || isAdminWari()" class="nav-item dropdown">
+            <li *ngIf="isSuperAdminWari()  || isAdminWari() || isSuperAdminPartenaire() || isAdminPartenaire()" class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="far fa-credit-card"></i>Compte
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" routerLink="/compte/ajout"><i class="fas fa-plus-circle"></i>Ajouter</a>
                     <a class="dropdown-item" routerLink="/compte/list"><i class="fas fa-list"></i>Lister</a>
+                    <a *ngIf="isSuperAdminPartenaire() || isAdminPartenaire()" class="dropdown-item" routerLink="/compte/list"><i class="fas fa-list"></i>Assignation</a>
                 </div>
             </li>
             <li *ngIf="isCaissier()" class="nav-item dropdown">
@@ -68,7 +69,7 @@
                     <a class="dropdown-item" href="#"><i class="fas fa-list"></i>Lister</a>
                 </div>
             </li>
-            <li class="nav-item dropdown pr-3">
+            <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img src="assets/avatar.png" class="rounded-circle" alt="avatar" width="30px">
                 </a>

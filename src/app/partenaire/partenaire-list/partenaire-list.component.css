@@ -9,5 +9,9 @@ table {
 
 td,
 th {
-    width: 12.5%;
+    width: 10%;
+}
+
+.action {
+    width: 15%;
 }

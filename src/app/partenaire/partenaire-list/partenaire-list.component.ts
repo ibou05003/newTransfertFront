@@ -11,7 +11,7 @@ import { Partenaire } from 'src/app/interface/partenaire';
 export class PartenaireListComponent implements OnInit {
 
   public partenaires=[]
-  displayedColumns: string[] = ['id', 'raisonSociale', 'ninea', 'adresseSociale', 'telephoneSiege', 'emailSiege', 'description'];
+  displayedColumns: string[] = ['id', 'raisonSociale', 'ninea', 'adresseSociale', 'telephoneSiege', 'emailSiege', 'description', 'status','action'];
   dataSource: MatTableDataSource<Partenaire>;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -21,11 +21,16 @@ export class PartenaireListComponent implements OnInit {
   ngOnInit() {
     this.partenaireService.getPartenaires()
         .subscribe(
-          data=>this.partenaires =data
+          data=>{
+            this.partenaires =data
+            this.loadP(data)
+          }
         );
-        this.dataSource = new MatTableDataSource(this.partenaires);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+  }
+  loadP(data){
+    this.dataSource = new MatTableDataSource(data);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();

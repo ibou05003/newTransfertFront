@@ -16,6 +16,9 @@ export class PartenaireAjoutComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private partenaireService: PartenaireService) { }
 
+  imageUrl:string ="assets/defaut.png"
+  fileToLoad: File=null
+
   partenaireForm=this.fb.group({
     raisonSociale: new FormControl(),
     ninea: new FormControl(),
@@ -34,22 +37,24 @@ export class PartenaireAjoutComponent implements OnInit {
   ngOnInit() {
   }
   setPartenaire(){
-    // this.partenaireData.raisonSociale=this.partenaireForm.get('raisonSociale').value
-    // this.partenaireData.ninea=this.partenaireForm.get('ninea').value
-    // this.partenaireData.adresseSociale=this.partenaireForm.get('adresseSociale').value
-    // this.partenaireData.telephoneSiege=this.partenaireForm.get('telephoneSiege').value
-    // this.partenaireData.description=this.partenaireForm.get('description').value
-    // this.partenaireData.nomCompletPersonneRef=this.partenaireForm.get('nomCompletPersonneRef').value
-    // this.partenaireData.emailPersonneRef=this.partenaireForm.get('emailPersonneRef').value
-    // this.partenaireData.emailSiege=this.partenaireForm.get('emailSiege').value
-    // this.partenaireData.telephoneRef=this.partenaireForm.get('telephoneRef').value
-    // this.partenaireData.cniPersonneRef=this.partenaireForm.get('cniPersonneRef').value
-    // this.partenaireData.adressePersonneRef=this.partenaireForm.get('adressePersonneRef').value
-    // this.partenaireData.imageFile=this.partenaireForm.get('imageFile').value
-    this.partenaireService.setPartenaire(this.partenaireForm.value)
+    
+    this.partenaireData=this.partenaireForm.value
+    this.partenaireData.imageFile=this.fileToLoad
+    console.log(this.partenaireData.imageFile)
+    console.log(this.partenaireData)
+    this.partenaireService.setPartenaire(this.partenaireData)
       .subscribe(
         res=>console.log(res),
         err=>console.log(err)
       )
+  }
+  handleFileInput(file: FileList){
+    this.fileToLoad=file.item(0)
+    //afficher l image telechargée
+    var reader = new FileReader()
+    reader.onload=(event:any)=>{
+      this.imageUrl=event.target.result 
+    }
+    reader.readAsDataURL(this.fileToLoad)
   }
 }

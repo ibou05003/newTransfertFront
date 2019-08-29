@@ -19,7 +19,22 @@ export class PartenaireService {
     .pipe(catchError(this.errorHandler))
   }
   setPartenaire(partenaire){
-    return this.http.post<any>(this.ajoutUrl,partenaire)
+    console.log(partenaire)
+    const formData:FormData=new FormData()
+    formData.append('raisonSociale',partenaire.raisonSociale)
+    formData.append('ninea',partenaire.ninea)
+    formData.append('adresseSociale',partenaire.adresseSociale)
+    formData.append('telephoneSiege',partenaire.telephoneSiege)
+    formData.append('description',partenaire.description)
+    formData.append('nomCompletPersonneRef',partenaire.nomCompletPersonneRef)
+    formData.append('emailPersonneRef',partenaire.emailPersonneRef)
+    formData.append('emailSiege',partenaire.emailSiege)
+    formData.append('telephoneRef',partenaire.telephoneRef)
+    formData.append('cniPersonneRef',partenaire.cniPersonneRef)
+    formData.append('adressePersonneRef',partenaire.adressePersonneRef)
+    formData.append('imageFile',partenaire.imageFile)
+
+    return this.http.post<any>(this.ajoutUrl,formData)
     .pipe(catchError(this.errorHandler))
   }
   errorHandler(error: HttpErrorResponse) {
