@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../service/auth.service';
 import { Router } from '@angular/router';
+import { User } from '../interface/user';
 
 @Component({
   selector: 'app-header',
@@ -8,10 +9,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-
+user: User
   constructor(private auth: AuthService,
               private router: Router){}
   ngOnInit() {
+    this.auth.getConnecte()
+    .subscribe(
+      data=>{
+        this.user =data
+      }
+    )
   }
   isAuthenticated(){
     return this.auth.isAuthenticated()

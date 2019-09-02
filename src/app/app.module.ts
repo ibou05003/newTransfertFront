@@ -29,6 +29,10 @@ import { AuthService } from './service/auth.service';
 import { AuthGuard } from './auth.guard';
 import { TokenInterceptorService } from './service/token-interceptor.service';
 import { PartenaireService } from './service/partenaire.service';
+import { UpdatePasswordComponent } from './security/update-password/update-password.component';
+import { UserListComponent } from './security/user-list/user-list.component';
+import { UserListSystemeComponent } from './security/user-list-systeme/user-list-systeme.component'
+import { CompteService } from './service/compte.service';
 
 @NgModule({
   declarations: [
@@ -50,7 +54,10 @@ import { PartenaireService } from './service/partenaire.service';
     VersementListParCompteComponent,
     CompteListParPartenaireComponent,
     UsersListParCompteComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    UpdatePasswordComponent,
+    UserListComponent,
+    UserListSystemeComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +68,7 @@ import { PartenaireService } from './service/partenaire.service';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [AuthService,PartenaireService,AuthGuard,
+  providers: [AuthService, CompteService,PartenaireService,AuthGuard,
   {
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptorService,

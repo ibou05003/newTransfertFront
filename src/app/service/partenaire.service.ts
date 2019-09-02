@@ -19,7 +19,6 @@ export class PartenaireService {
     .pipe(catchError(this.errorHandler))
   }
   setPartenaire(partenaire){
-    console.log(partenaire)
     const formData:FormData=new FormData()
     formData.append('raisonSociale',partenaire.raisonSociale)
     formData.append('ninea',partenaire.ninea)

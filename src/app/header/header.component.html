@@ -2,10 +2,10 @@
     <div class="container">
         <div class="row">
             <div class="col-6">
-                Compte N° :
+                Compte N° : {{ user.compte.numeroCompte }}
             </div>
             <div class="col-6 text-right">
-                Solde: 000 000 0000
+                Solde: {{ user.compte.solde }} F CFA
             </div>
         </div>
         <!--/row-->
@@ -38,7 +38,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" routerLink="/register"><i class="fas fa-plus-circle"></i>Ajouter</a>
-                    <a class="dropdown-item" routerLink="/"><i class="fas fa-list"></i>Lister</a>
+                    <a class="dropdown-item" routerLink="/users"><i class="fas fa-list"></i>Lister</a>
                 </div>
             </li>
             <li *ngIf="isSuperAdminWari()  || isAdminWari() || isSuperAdminPartenaire() || isAdminPartenaire()" class="nav-item dropdown">
@@ -46,8 +46,8 @@
                     <i class="far fa-credit-card"></i>Compte
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" routerLink="/compte/ajout"><i class="fas fa-plus-circle"></i>Ajouter</a>
-                    <a class="dropdown-item" routerLink="/compte/list"><i class="fas fa-list"></i>Lister</a>
+                    <a *ngIf="isSuperAdminWari()  || isAdminWari()" class="dropdown-item" routerLink="/compte/ajout"><i class="fas fa-plus-circle"></i>Ajouter</a>
+                    <a *ngIf="isSuperAdminWari()  || isAdminWari()" class="dropdown-item" routerLink="/compte/list"><i class="fas fa-list"></i>Lister</a>
                     <a *ngIf="isSuperAdminPartenaire() || isAdminPartenaire()" class="dropdown-item" routerLink="/compte/list"><i class="fas fa-list"></i>Assignation</a>
                 </div>
             </li>

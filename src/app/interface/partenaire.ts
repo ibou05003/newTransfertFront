@@ -1,3 +1,6 @@
+import { User } from './user';
+import { Compte } from './compte';
+
 export interface Partenaire {
     id:number,
     raisonSociale: string,
@@ -13,5 +16,7 @@ export interface Partenaire {
     adressePersonneRef: string,
     status: string,
     imageFile:File,
-    action:string
+    action:string,
+    users: User[],
+    comptes: Compte[]
 }
