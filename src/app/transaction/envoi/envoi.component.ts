@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Transaction } from 'src/app/interface/transaction';
 import { TransactionService } from 'src/app/service/transaction.service';
+import { Router } from '@angular/router';
+import { Tarif } from 'src/app/interface/tarif';
 
 @Component({
   selector: 'app-envoi',
@@ -15,12 +17,10 @@ export class EnvoiComponent implements OnInit {
   msg=''
   errorMsg=''
   selected='cni'
-  
-  constructor(private fb: FormBuilder,
-              private transactionService: TransactionService) { }
+  tarif:Tarif[]
 
-  imageUrl:string ="assets/defaut.png"
-  fileToLoad: File=null
+  constructor(private transactionService: TransactionService,
+              private router: Router) { }
 
   envoiForm=new FormGroup({
     prenomEnv: new FormControl('', Validators.compose([
@@ -34,13 +34,13 @@ export class EnvoiComponent implements OnInit {
     telEnv: new FormControl('', Validators.required),
     montant: new FormControl('', Validators.required),
     adresseEnv: new FormControl('', Validators.required),
-    typePieceEnv: new FormControl('', Validators.compose([
-      Validators.minLength(5),
-      Validators.required
-    ])),
-    cniEnv: new FormControl('', Validators.required),
+    typePieceEnv: new FormControl('', Validators.required),
     prenomBenef: new FormControl('', Validators.compose([
       Validators.minLength(2),
+      Validators.required
+    ])),
+    cniEnv: new FormControl('', Validators.compose([
+      Validators.minLength(14),
       Validators.required
     ])),
     nomBenef: new FormControl('', Validators.compose([
@@ -48,21 +48,20 @@ export class EnvoiComponent implements OnInit {
       Validators.required
     ])),
     telBenef: new FormControl('', Validators.required),
-    typePieceBenef: new FormControl('',Validators.required)
     })
 
   account_validation_messages = {
-    'raisonSociale': [
-      { type: 'required', message: 'raison Sociale obligatoire' },
-      { type: 'minlength', message: 'raison Sociale doit avoir au moins 2 caracteres' },
+    'prenomEnv': [
+      { type: 'required', message: 'prenom requis' },
+      { type: 'minlength', message: 'le prenom doit avoir au moins 2 caracteres' },
     ],
     'email': [
       { type: 'required', message: 'le mail est obligatoire' },
       { type: 'pattern', message: 'entrer un mail valide' }
     ],
-    'ninea': [
-      { type: 'required', message: 'le ninea est obligatoire' },
-      { type: 'minlength', message: 'le ninea doit avoir au moins 5 caracteres' },
+    'nomEnv': [
+      { type: 'required', message: 'le nom est obligatoire' },
+      { type: 'minlength', message: 'le nom doit avoir au moins 2 caracteres' },
     ],
     'telephone': [
       { type: 'required', message: 'le telephone est requis' },
@@ -74,16 +73,12 @@ export class EnvoiComponent implements OnInit {
     'adresse': [
       { type: 'required', message: 'l adresse est obligatoire' }
     ],
-    'description': [
-      { type: 'required', message: 'raisonSociale is required' },
-      { type: 'minlength', message: 'la description doit avoir au moins 5 caracteres' }
+    'montant': [
+      { type: 'required', message: 'montant obligatoire' },
     ],
     'nom': [
       { type: 'required', message: 'le nom complet est obligatoire' },
       { type: 'minlength', message: 'le nom complet doit avoir au moins 2 caracteres' }
-    ],
-    'imageFile': [
-      { type: 'required', message: 'image obligatoire' },
     ]
     }
 
@@ -97,11 +92,26 @@ export class EnvoiComponent implements OnInit {
       .subscribe(
         res=>{
           this.msg=res.status
+          //this.router.navigate(['/'])
         },
         err=>{
           this.errorMsg=err.error.message
             console.log(err)
         }
       )
+  }
+  getFrais(montant){
+    montant=this.envoiForm.get('montant').value
+    //console.log(montant)
+      this.transactionService.getFrais(montant)
+        .subscribe(
+          data=>{
+            this.tarif=data
+            console.log(this.tarif)
+          },
+          err=>{
+            console.log(err)
+          }
+        )
   }
 }

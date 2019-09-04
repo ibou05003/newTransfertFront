@@ -17,6 +17,9 @@ user: User
     .subscribe(
       data=>{
         this.user =data
+      },
+      err=>{
+        this.auth.logout();
       }
     )
   }

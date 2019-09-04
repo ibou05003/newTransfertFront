@@ -1,12 +1,14 @@
 <app-header></app-header>
 <div class="container pt-5">
-    <div class="row">
-        <h1>Effectuer Versement</h1>
+    <div class="row text-center">
+        <div class="col-12">
+            <h1>Effectuer Versement</h1>
+        </div>
     </div>
     <div class="row">
         <div class="col-12 col-md-6">
             <div class="container-fluid">
-                <div class="row text-center">
+                <div class="row">
                     <h2>Compte</h2>
                 </div>
                 <div class="row">
@@ -18,27 +20,29 @@
                                     <mat-error class="error-message" *ngIf="compteForm.get('compte').hasError(validation.type) && (compteForm.get('compte').dirty || compteForm.get('compte').touched)">{{validation.message}}</mat-error>
                                 </mat-error>
                             </mat-form-field>
-                            <button class="btn btn-success" type="submit" [disabled]="!compteForm.valid">Submit</button>
+                            <button class="btn btn-success" type="submit" [disabled]="!compteForm.valid"><i class="fas fa-search"></i></button>
                         </form>
                     </div>
                 </div>
-                <div class="row text-center" *ngIf="affiche">
-                    <div class="row">
-                        <div class="col-12">
-                            <h2>Versement</h2>
+                <div class="row mt-5" *ngIf="affiche">
+                    <div class="col-12">
+                        <div class="row ">
+                            <div class="col-12">
+                                <h2>Versement</h2>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row pt-5">
-                        <div class="col-12">
-                            <form [formGroup]="depotForm" (ngSubmit)="versement(compteForm.value)">
-                                <mat-form-field class="full-width">
-                                    <input matInput type="number" min="75000" placeholder="Montant à Verse" formControlName="montant" required>
-                                    <mat-error *ngFor="let validation of account_validation_messages.montant">
-                                        <mat-error class="error-message" *ngIf="depotForm.get('montant').hasError(validation.type) && (depotForm.get('montant').dirty || depotForm.get('montant').touched)">{{validation.message}}</mat-error>
-                                    </mat-error>
-                                </mat-form-field>
-                                <button class="btn btn-success" type="submit" [disabled]="!depotForm.valid">Submit</button>
-                            </form>
+                        <div class="row">
+                            <div class="col-12">
+                                <form [formGroup]="depotForm" (ngSubmit)="versement(compteForm.value)">
+                                    <mat-form-field class="full-width">
+                                        <input matInput type="number" min="75000" placeholder="Montant à Verser" formControlName="montant" required>
+                                        <mat-error *ngFor="let validation of account_validation_messages.montant">
+                                            <mat-error class="error-message" *ngIf="depotForm.get('montant').hasError(validation.type) && (depotForm.get('montant').dirty || depotForm.get('montant').touched)">{{validation.message}}</mat-error>
+                                        </mat-error>
+                                    </mat-form-field>
+                                    <button class="btn btn-success" type="submit" [disabled]="!depotForm.valid">Verser</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -89,7 +93,7 @@
                                 <td>Montant Versé</td>
                             </tr>
                             <tr *ngFor="let versement of versements">
-                                <td>{{ versement.dateVersement | date : 'yyyy-MM-dd' }}</td>
+                                <td>{{ versement.dateVersement | date : 'short' }}</td>
                                 <td>{{ versement.montant }}</td>
                             </tr>
                         </table>

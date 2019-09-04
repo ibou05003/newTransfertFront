@@ -1,1 +1,83 @@
-<p>retrait works!</p>
+<app-header></app-header>
+<div class="alert alert-success" *ngIf="msg">
+    {{ msg }}
+</div>
+<div class="alert alert-danger" *ngIf="errorMsg">
+    {{ errorMsg }}
+</div>
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1>Retrait ou Remboursement</h1>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-12 col-md-6">
+            <div class="row">
+                <form [formGroup]="codeForm" (ngSubmit)="rechercheCode(codeForm.value)">
+                    <div class="col-12">
+                        <label for="">Choisir un type</label>
+                        <br>
+                        <label for="retrait">Retrait</label>
+                        <input type="radio" formControlName="typeRetrait" id="retrait" value="retrait" checked>
+                        <label for="remboursement">Remboursement</label>
+                        <input type="radio" formControlName="typeRetrait" id="remboursement">
+                    </div>
+                    <div class="col-12">
+
+                        <mat-form-field class="full-width">
+                            <input matInput placeholder="Code de retrait" formControlName="code" required>
+                            <mat-error *ngFor="let validation of account_validation_messages.code">
+                                <mat-error class="error-message" *ngIf="codeForm.get('code').hasError(validation.type) && (codeForm.get('code').dirty || codeForm.get('code').touched)">{{validation.message}}</mat-error>
+                            </mat-error>
+                        </mat-form-field>
+                        <button class="btn btn-success" type="submit" [disabled]="!codeForm.valid"><i class="fas fa-search"></i></button>
+
+                    </div>
+                </form>
+            </div>
+            <div class="row mt-5" *ngIf="trans">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-12">
+                            <h3>Envoyeur</h3>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12 col-md-6">
+                            <mat-form-field class="col-12">
+                                <input matInput disabled placeholder="Prenom Envoyeur" value="{{transaction.prenomEnv}}">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <mat-form-field class="col-12">
+                                <input matInput disabled placeholder="Nom Envoyeur" value="{{transaction.nomEnv}}">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <mat-form-field class="col-12">
+                                <input matInput disabled placeholder="Telephone Envoyeur" value="{{transaction.telEnv}}">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <mat-form-field class="col-12">
+                                <input matInput disabled placeholder="Montant Envoyé" value="{{transaction.montant}} F CFA">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <mat-form-field class="col-12">
+                                <input matInput disabled placeholder="Adresse Envoyeur" value="{{transaction.adresseEnv}}">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6" *ngIf="trans"></div>
+    </div>
+</div>

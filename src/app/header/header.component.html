@@ -1,4 +1,4 @@
-<div class="header bg-light py-2" *ngIf="isSuperAdminPartenaire() || isAdminPartenaire() || isUser()">
+<div class="header alert-secondary py-2" *ngIf="isSuperAdminPartenaire() || isAdminPartenaire() || isUser()">
     <div class="container">
         <div class="row">
             <div class="col-6">
@@ -21,7 +21,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" routerLink="/">Home </a>
+                <a class="nav-link" routerLink="/">Acceuil </a>
             </li>
             <li *ngIf="isSuperAdminWari()  || isAdminWari()" class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -47,7 +47,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a *ngIf="isSuperAdminWari()  || isAdminWari()" class="dropdown-item" routerLink="/compte/ajout"><i class="fas fa-plus-circle"></i>Ajouter</a>
-                    <a *ngIf="isSuperAdminWari()  || isAdminWari()" class="dropdown-item" routerLink="/compte/list"><i class="fas fa-list"></i>Lister</a>
+                    <a *ngIf="isSuperAdminWari()  || isAdminWari() || isAdminPartenaire() || isSuperAdminPartenaire()" class="dropdown-item" routerLink="/compte/list"><i class="fas fa-list"></i>Lister</a>
                     <a *ngIf="isSuperAdminPartenaire() || isAdminPartenaire()" class="dropdown-item" routerLink="/compte/list"><i class="fas fa-list"></i>Assignation</a>
                 </div>
             </li>
@@ -65,8 +65,10 @@
                     <i class="fas fa-exchange-alt"></i>Transaction
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#"><i class="fas fa-plus-circle"></i>Ajouter</a>
-                    <a class="dropdown-item" href="#"><i class="fas fa-list"></i>Lister</a>
+                    <a class="dropdown-item" routerLink="/envoi">
+                        <i class="fas fa-exchange-alt acceuil"></i>Envoi</a>
+                    <a class="dropdown-item" routerLink="/retrait">
+                        <i class="fas fa-money-bill-wave acceuil"></i>Retrait</a>
                 </div>
             </li>
             <li class="nav-item dropdown">

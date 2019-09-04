@@ -8,52 +8,70 @@
     <div class="row">
         <div class="col-12">
             <div class="grid grid-pad">
-                <a routerLink="/partenaire/ajout" class="col-1-4" *ngIf="isSuperAdminWari() || isAdminWari()">
+                <a routerLink="/partenaire/ajout" class="col-12 col-md-3" *ngIf="isSuperAdminWari() || isAdminWari()">
                     <div class="module hero">
                         <div><i class="fas fa-plus-circle acceuil"></i></div>
                         <h4>Ajout Partenaire</h4>
                     </div>
                 </a>
-                <a routerLink="/register" class="col-1-4" *ngIf="isSuperAdminWari() || isAdminWari() || isSuperAdminPartenaire() || isAdminPartenaire()">
+                <a routerLink="/register" class="col-12 col-md-3" *ngIf="isSuperAdminWari() || isAdminWari() || isSuperAdminPartenaire() || isAdminPartenaire()">
                     <div class="module hero">
                         <div><i class="fas fa-user-plus acceuil"></i></div>
                         <h4>Ajout Utilisateur</h4>
                     </div>
                 </a>
-                <a routerLink="/compte/ajout" class="col-1-4" *ngIf="isSuperAdminWari() || isAdminWari()">
+                <a routerLink="/compte/ajout" class="col-12 col-md-3" *ngIf="isSuperAdminWari() || isAdminWari()">
                     <div class="module hero">
                         <div><i class="fas fa-money-check acceuil"></i></div>
                         <h4>Ajout Compte</h4>
                     </div>
                 </a>
-                <a routerLink="/versement/ajout" class="col-1-4" *ngIf="isCaissier()">
+                <a routerLink="/versement/ajout" class="col-12 col-md-3" *ngIf="isCaissier()">
                     <div class="module hero">
                         <div><i class="fas fa-comment-dollar acceuil"></i></div>
                         <h4>Effectuer Versement</h4>
                     </div>
                 </a>
-                <a class="col-1-4" *ngIf="isSuperAdminPartenaire() || isAdminPartenaire() || isUser()">
+                <a routerLink="/envoi" class="col-12 col-md-3" *ngIf="isSuperAdminPartenaire() || isAdminPartenaire() || isUser()">
                     <div class="module hero">
                         <div><i class="fas fa-exchange-alt acceuil"></i></div>
                         <h4>Effectuer Envoi</h4>
                     </div>
                 </a>
-                <a class="col-1-4" *ngIf="isSuperAdminPartenaire() || isAdminPartenaire() || isUser()">
+                <a routerLink="/retrait" class="col-12 col-md-3" *ngIf="isSuperAdminPartenaire() || isAdminPartenaire() || isUser()">
                     <div class="module hero">
                         <div><i class="fas fa-money-bill-wave acceuil"></i></div>
                         <h4>Effectuer Retrait</h4>
                     </div>
                 </a>
-                <a routerLink="/partenaire/list" class="col-1-4" *ngIf="isSuperAdminWari() || isAdminWari()">
+                <a routerLink="/partenaire/list" class="col-12 col-md-3" *ngIf="isSuperAdminWari() || isAdminWari()">
                     <div class="module hero">
                         <div><i class="fas fa-list acceuil"></i></div>
                         <h4>Lister Partenaires</h4>
                     </div>
                 </a>
-                <a class="col-1-4" *ngIf="isSuperAdminWari() || isAdminWari() || isSuperAdminPartenaire() || isAdminPartenaire()">
+                <a class="col-12 col-md-3" *ngIf="isSuperAdminWari() || isAdminWari() || isSuperAdminPartenaire() || isAdminPartenaire()">
                     <div class="module hero">
                         <div><i class="fas fa-list acceuil"></i></div>
                         <h4>Lister Utilisateurs</h4>
+                    </div>
+                </a>
+                <a class="col-12 col-md-3" *ngIf="isSuperAdminWari() || isAdminWari() || isSuperAdminPartenaire() || isAdminPartenaire()">
+                    <div class="module hero">
+                        <div><i class="fas fa-list acceuil"></i></div>
+                        <h4>Lister Comptes</h4>
+                    </div>
+                </a>
+                <a class="col-12 col-md-3" *ngIf="isCaissier()">
+                    <div class="module hero">
+                        <div><i class="fas fa-list acceuil"></i></div>
+                        <h4>Lister Versements</h4>
+                    </div>
+                </a>
+                <a class="col-12 col-md-3" *ngIf="isSuperAdminWari() || isAdminWari() || isSuperAdminPartenaire() || isAdminPartenaire() || isUser()">
+                    <div class="module hero">
+                        <div><i class="fas fa-list acceuil"></i></div>
+                        <h4>Lister Transactions</h4>
                     </div>
                 </a>
             </div>

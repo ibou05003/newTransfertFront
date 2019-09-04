@@ -2,6 +2,9 @@
 <div class="alert alert-success" *ngIf="msg">
     {{ msg }}
 </div>
+<div class="alert alert-danger" *ngIf="errorMsg">
+    {{ errorMsg }}
+</div>
 <form [formGroup]="envoiForm">
     <div class="container pt-5">
         <div class="row">
@@ -16,7 +19,7 @@
                         <div class="row">
                             <div class="col-12 col-md-6">
                                 <mat-form-field class="col-12" hideRequiredMarker>
-                                    <span matPrefix><mat-icon>business</mat-icon></span>
+                                    <span matPrefix><i class="fas fa-user"></i></span>
                                     <input matInput placeholder="Prenom" required formControlName="prenomEnv">
                                     <mat-error *ngFor="let validation of account_validation_messages.prenomEnv">
                                         <mat-error class="error-message" *ngIf="envoiForm.get('prenomEnv').hasError(validation.type) && (envoiForm.get('prenomEnv').dirty || envoiForm.get('prenomEnv').touched)">{{validation.message}}</mat-error>
@@ -25,7 +28,7 @@
                             </div>
                             <div class="col-12 col-md-6">
                                 <mat-form-field class="col-12" hideRequiredMarker>
-                                    <span matPrefix><mat-icon>business</mat-icon></span>
+                                    <span matPrefix><i class="fas fa-user"></i></span>
                                     <input matInput placeholder="Nom" required formControlName="nomEnv">
                                     <mat-error *ngFor="let validation of account_validation_messages.nomEnv">
                                         <mat-error class="error-message" *ngIf="envoiForm.get('nomEnv').hasError(validation.type) && (envoiForm.get('nomEnv').dirty || envoiForm.get('nomEnv').touched)">{{validation.message}}</mat-error>
@@ -36,17 +39,17 @@
                         <div class="row">
                             <div class="col-12 col-md-6">
                                 <mat-form-field class="col-12" hideRequiredMarker>
-                                    <span matPrefix><i class="fas fa-map-marker-alt"></i></span>
-                                    <input matInput placeholder="Adresse" required formControlName="adresseEnv">
-                                    <mat-error *ngFor="let validation of account_validation_messages.adresse">
-                                        <mat-error class="error-message" *ngIf="envoiForm.get('adresseEnv').hasError(validation.type) && (envoiForm.get('adresseEnv').dirty || envoiForm.get('adresseEnv').touched)">{{validation.message}}</mat-error>
+                                    <span matPrefix><i class="fas fa-phone"></i></span>
+                                    <input matInput placeholder="Téléphone" required formControlName="telEnv">
+                                    <mat-error *ngFor="let validation of account_validation_messages.telephone">
+                                        <mat-error class="error-message" *ngIf="envoiForm.get('telEnv').hasError(validation.type) && (envoiForm.get('telEnv').dirty || envoiForm.get('telEnv').touched)">{{validation.message}}</mat-error>
                                     </mat-error>
                                 </mat-form-field>
                             </div>
                             <div class="col-12 col-md-6">
                                 <mat-form-field class="col-12" hideRequiredMarker>
-                                    <span matPrefix><mat-icon>phone</mat-icon></span>
-                                    <input matInput type="number" min="1000" max="3000000" placeholder="Montant à Envoyer" required formControlName="montant">
+                                    <span matPrefix><i class="fas fa-coins"></i></span>
+                                    <input matInput #montant type="number" min="1000" max="3000000" placeholder="Montant à Envoyer" (change)="getFrais(envoiForm.get('montant').value)" required formControlName="montant">
                                     <mat-error *ngFor="let validation of account_validation_messages.montant">
                                         <mat-error class="error-message" *ngIf="envoiForm.get('montant').hasError(validation.type) && (envoiForm.get('montant').dirty || envoiForm.get('montant').touched)">{{validation.message}}</mat-error>
                                     </mat-error>
@@ -54,9 +57,9 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12 col-md-6">
+                            <div class="col-12 col-md-6 pl-4">
                                 <mat-form-field>
-                                    <mat-label>Choisir un role</mat-label>
+                                    <mat-label>Type de Piece</mat-label>
                                     <span matPrefix><i class="fas fa-user-tag"></i></span>
                                     <mat-select [(value)]="selected" formControlName="typePieceEnv">
                                         <mat-option value="cni">Carte Nationale D'identité</mat-option>
@@ -67,10 +70,21 @@
                             </div>
                             <div class="col-12 col-md-6">
                                 <mat-form-field class="col-12" hideRequiredMarker>
-                                    <span matPrefix><mat-icon>business</mat-icon></span>
-                                    <textarea matInput placeholder="Numéro D'identification" required formControlName="cniEnv"></textarea>
+                                    <span matPrefix><i class="fas fa-address-card"></i></span>
+                                    <input matInput type="number" min="1000000000000" placeholder="Numéro D'identification" required formControlName="cniEnv">
                                     <mat-error *ngFor="let validation of account_validation_messages.cni">
                                         <mat-error class="error-message" *ngIf="envoiForm.get('cniEnv').hasError(validation.type) && (envoiForm.get('cniEnv').dirty || envoiForm.get('cniEnv').touched)">{{validation.message}}</mat-error>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <mat-form-field class="col-12" hideRequiredMarker>
+                                    <span matPrefix><i class="fas fa-map-marker-alt"></i></span>
+                                    <input matInput placeholder="Adresse" required formControlName="adresseEnv">
+                                    <mat-error *ngFor="let validation of account_validation_messages.adresse">
+                                        <mat-error class="error-message" *ngIf="envoiForm.get('adresseEnv').hasError(validation.type) && (envoiForm.get('adresseEnv').dirty || envoiForm.get('adresseEnv').touched)">{{validation.message}}</mat-error>
                                     </mat-error>
                                 </mat-form-field>
                             </div>
@@ -83,7 +97,7 @@
                         <div class="row">
                             <div class="col-12 col-md-6">
                                 <mat-form-field class="col-12" hideRequiredMarker>
-                                    <span matPrefix><mat-icon>business</mat-icon></span>
+                                    <span matPrefix><i class="fas fa-user"></i></span>
                                     <input matInput placeholder="Prenom" required formControlName="prenomBenef">
                                     <mat-error *ngFor="let validation of account_validation_messages.prenomEnv">
                                         <mat-error class="error-message" *ngIf="envoiForm.get('prenomBenef').hasError(validation.type) && (envoiForm.get('prenomBenef').dirty || envoiForm.get('prenomBenef').touched)">{{validation.message}}</mat-error>
@@ -92,7 +106,7 @@
                             </div>
                             <div class="col-12 col-md-6">
                                 <mat-form-field class="col-12" hideRequiredMarker>
-                                    <span matPrefix><mat-icon>business</mat-icon></span>
+                                    <span matPrefix><i class="fas fa-user"></i></span>
                                     <input matInput placeholder="Nom" required formControlName="nomBenef">
                                     <mat-error *ngFor="let validation of account_validation_messages.nomEnv">
                                         <mat-error class="error-message" *ngIf="envoiForm.get('nomBenef').hasError(validation.type) && (envoiForm.get('nomBenef').dirty || envoiForm.get('nomBenef').touched)">{{validation.message}}</mat-error>
@@ -102,22 +116,11 @@
                         </div>
                         <div class="row">
                             <div class="col-12 col-md-6">
-                                <mat-form-field>
-                                    <mat-label>Type de Piece</mat-label>
-                                    <span matPrefix><i class="fas fa-user-tag"></i></span>
-                                    <mat-select [(value)]="selected" formControlName="typePieceBenef">
-                                        <mat-option value="cni">Carte Nationale D'identité</mat-option>
-                                        <mat-option value="permis">Permis de Conduire</mat-option>
-                                        <mat-option value="passport">Passport</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-                            <div class="col-12 col-md-6">
                                 <mat-form-field class="col-12" hideRequiredMarker>
-                                    <span matPrefix><mat-icon>business</mat-icon></span>
-                                    <textarea matInput placeholder="Numéro D'identification" required formControlName="cniBenef"></textarea>
-                                    <mat-error *ngFor="let validation of account_validation_messages.cni">
-                                        <mat-error class="error-message" *ngIf="envoiForm.get('cniBenef').hasError(validation.type) && (envoiForm.get('cniBenef').dirty || envoiForm.get('cniBenef').touched)">{{validation.message}}</mat-error>
+                                    <span matPrefix><i class="fas fa-phone"></i></span>
+                                    <input matInput placeholder="Téléphone" required formControlName="telBenef">
+                                    <mat-error *ngFor="let validation of account_validation_messages.telephone">
+                                        <mat-error class="error-message" *ngIf="envoiForm.get('telBenef').hasError(validation.type) && (envoiForm.get('telBenef').dirty || envoiForm.get('telBenef').touched)">{{validation.message}}</mat-error>
                                     </mat-error>
                                 </mat-form-field>
                             </div>
@@ -128,8 +131,25 @@
                         </div>
                     </mat-step>
                     <mat-step label="Validation">
-                        <div class="text-center">
-                            <button (click)="setEnvoi()" type="submit" class="btn btn-success" [disabled]="!envoiForm.valid">Ajouter Partenaire</button>
+                        <div class="row alert-success pt-3">
+                            <div class="col-12 col-md-6">
+                                <p>Envoyeur : {{ envoiForm.get('prenomEnv').value }} {{ envoiForm.get('nomEnv').value }}</p>
+                                <p>Telephone : {{ envoiForm.get('telEnv').value }}</p>
+                            </div>
+                            <hr>
+                            <div class="col-12 col-md-6">
+                                <p>Bénéficiaire : {{ envoiForm.get('prenomBenef').value }} {{ envoiForm.get('nomBenef').value }}</p>
+                                <p>Telephone : {{ envoiForm.get('telBenef').value }}</p>
+                            </div>
+                            <div class="col-12 col-md-6" *ngIf="tarif">
+                                <p>Montant : {{ envoiForm.get('montant').value }} F CFA</p>
+                                <p>Frais : {{ tarif[0].valeur }} F CFA</p>
+                                <hr>
+                                <p>Total : {{ envoiForm.get('montant').value+tarif[0].valeur }} F CFA</p>
+                            </div>
+                        </div>
+                        <div class="text-center mt-2">
+                            <button (click)="setEnvoi()" type="submit" class="btn btn-success" [disabled]="!envoiForm.valid">Effectuer Envoi</button>
                         </div>
                     </mat-step>
                 </div>
