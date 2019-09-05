@@ -27,5 +27,6 @@ export interface Transaction {
     frais: number,
     typePieceBenef: string,
     cniEnv: number,
-    userRet: User
+    userRet: User,
+    typeRetrait: string
 }

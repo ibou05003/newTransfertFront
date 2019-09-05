@@ -50,10 +50,14 @@ export class RetraitComponent implements OnInit {
     
     this.retraitData=this.retraitForm.value
     console.log(this.retraitData)
-    this.transactionService.setRetrait(this.retraitData)
+    let retrait= this.transaction['code'];
+    this.retraitData.typeRetrait=this.codeForm.get('typeRetrait').value
+    console.log(retrait)
+    this.transactionService.setRetrait(this.retraitData,retrait)
       .subscribe(
         res=>{
           this.msg=res.status
+          console.log(res)
         },
         err=>{
           this.errorMsg=err.error.message

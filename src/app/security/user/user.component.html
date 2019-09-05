@@ -78,7 +78,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12 col-md-6">
-                                <mat-form-field>
+                                <mat-form-field class="col-12">
                                     <mat-label>Choisir un role</mat-label>
                                     <span matPrefix><i class="fas fa-user-tag"></i></span>
                                     <mat-select [(value)]="selected" formControlName="role">
@@ -96,15 +96,15 @@
                         </div>
                     </mat-step>
                     <mat-step label="Photo et Validation">
-                        <div class="col-12 col-md-6 offset-md-3">
+                        <div class="col-12 col-md-6 offset-md-3 text-center">
                             <label for="imageFile">Inserer une photo</label>
-                            <img [src]="imageUrl" style="widows: 250px;height:200px">
+                            <img [src]="imageUrl" style="widows: 250px;height:200px" class="rounded-circle">
                             <input type="file" formControlName="imageFile" #imageFile accept="image/*" (change)="handleFileInput($event.target.files)">
                             <mat-error *ngFor="let validation of account_validation_messages.imageFile">
                                 <mat-error class="error-message" *ngIf="userForm.get('imageFile').hasError(validation.type) && (userForm.get('imageFile').dirty || userForm.get('imageFile').touched)">{{validation.message}}</mat-error>
                             </mat-error>
                         </div>
-                        <div class="text-center">
+                        <div class="text-center mt-4">
                             <button (click)="setUser()" type="submit" class="btn btn-success" [disabled]="!userForm.valid">Ajouter Utilisateur</button>
                         </div>
                     </mat-step>

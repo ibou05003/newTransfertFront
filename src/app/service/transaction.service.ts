@@ -23,9 +23,9 @@ export class TransactionService {
     .pipe(catchError(this.errorHandler))
   }
   /**Retrait */
-  setRetrait(transaction){
+  setRetrait(transaction,code){
     console.log(transaction)
-    return this.http.post<any>(this.retUrl,transaction)
+    return this.http.post<any>(`${this.retUrl}/${code}`,transaction)
     .pipe(catchError(this.errorHandler))
   }
   /**Recherche du code */
