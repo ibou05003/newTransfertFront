@@ -10,38 +10,38 @@ import { AuthService } from '../service/auth.service';
 export class DashboardComponent implements OnInit {
 
   constructor(private auth: AuthService,
-    private router: Router){}
-ngOnInit() {
-  if(!this.isAuthenticated){
+    private router: Router) { }
+  ngOnInit() {
+    if (!this.isAuthenticated) {
+      return this.router.navigate(['/login'])
+    }
+  }
+  isAuthenticated() {
+    return this.auth.isAuthenticated()
+  }
+
+  isSuperAdminWari() {
+    return this.auth.isSuperAdminWari()
+  }
+  isAdminWari() {
+    return this.auth.isAdminWari()
+  }
+  isCaissier() {
+    return this.auth.isCaissier()
+  }
+  isSuperAdminPartenaire() {
+    return this.auth.isSuperAdminPartenaire()
+  }
+  isAdminPartenaire() {
+    return this.auth.isAdminPartenaire()
+  }
+  isUser() {
+    return this.auth.isUser()
+  }
+
+  logout() {
+    this.auth.logout()
     return this.router.navigate(['/login'])
   }
-}
-isAuthenticated(){
-return this.auth.isAuthenticated()
-}
-
-isSuperAdminWari(){
-return this.auth.isSuperAdminWari()
-}
-isAdminWari(){
-return this.auth.isAdminWari()
-}
-isCaissier(){
-return this.auth.isCaissier()
-}
-isSuperAdminPartenaire(){
-return this.auth.isSuperAdminPartenaire()
-}
-isAdminPartenaire(){
-return this.auth.isAdminPartenaire()
-}
-isUser(){
-return this.auth.isUser()
-}
-
-logout(){
-this.auth.logout()
-return this.router.navigate(['/login'])
-}
 
 }

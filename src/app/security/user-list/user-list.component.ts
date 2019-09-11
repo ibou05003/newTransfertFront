@@ -1,7 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { User } from 'src/app/interface/user';
 import { AuthService } from 'src/app/service/auth.service';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
+import { UserDetailsComponent } from 'src/app/user-details/user-details.component';
 
 @Component({
   selector: 'app-user-list',
@@ -12,70 +15,105 @@ export class UserListComponent implements OnInit {
 
   public users=[]
   connecte:User
-  displayedColumns: string[] = ['id', 'email', 'nomComplet', 'telephone', 'cni', 'adresse', 'status','action'];
+  msg=''
+  displayedColumns: string[] = ['id', 'email','roles', 'nomComplet', 'telephone', 'cni', 'adresse', 'status','action'];
   dataSource: MatTableDataSource<User>;
-  dataSource1: MatTableDataSource<User>;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private auth: AuthService) { }
+  constructor(private auth: AuthService,
+              private router: Router,
+              private dialog: MatDialog) { }
 
   ngOnInit() {
-    if(this.isAdminWari() || this.isSuperAdminWari()){
-      this.auth.getUsersSysteme()
+    this.auth.getUsers()
       .subscribe(
-        data=>{
-          this.users =data
-          console.log(this.users)
-          this.loadP1(data)
+        res=>{
+          console.log(res)
+          this.dataSource = new MatTableDataSource(res);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        },
+        err=>{
+          console.log(err)
         }
-      );
-    }else{
-      if(this.isAdminPartenaire() || this.isSuperAdminPartenaire()){
-        this.auth.getConnecte()
-          .subscribe(
-            res=>{
-              this.connecte=res
-              this.auth.getUsersPart(this.connecte.partenaire)
-                .subscribe(
-                  data=>{
-                    this.users =data
-                    this.loadP(data)
-                  }
-                )
-            }
-          )
-      }
-    }
-    
+      )
   }
   loadP(data){
     this.dataSource = new MatTableDataSource(data);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-  loadP1(data){
-    this.dataSource1 = new MatTableDataSource(data);
-    this.dataSource1.paginator = this.paginator;
-    this.dataSource1.sort = this.sort;
-  }
+  
   applyFilter(filterValue: string) {
-    if(this.isAdminPartenaire() || this.isSuperAdminPartenaire()){
-      this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource.filter = filterValue.trim().toLowerCase();
 
-      if (this.dataSource.paginator) {
-        this.dataSource.paginator.firstPage();
-    }else{
-      this.dataSource1.filter = filterValue.trim().toLowerCase();
-
-      if (this.dataSource1.paginator) {
-        this.dataSource1.paginator.firstPage();
-    }
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
     }
   }
-}
 
-
+  bloquer(id,status){
+    if(status=='Actif'){
+      this.msg='Bloqué'
+    }else{
+      this.msg='Débloqué'
+    }
+    Swal.fire({
+      title: 'Etes vous sure?',
+      text: "l'utilisateur va etre " +this.msg+"!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Oui!',
+      cancelButtonText: 'Annuler!'
+    }).then((result) => {
+      if (result.value) {
+        this.auth.bloquer(id)
+        .subscribe(
+          res=>{
+            console.log(res)
+            
+            Swal.fire({
+              type: 'success',
+              text: 'Utilisateur '+this.msg
+            })
+            this.ngOnInit();
+          },
+          err=>{
+            this.msg=err.error.error.exception[0].message
+            Swal.fire({
+              type: 'error',
+              text: this.msg
+            })
+          }
+        )
+        
+      }
+    })
+    
+  }
+  /**Gestion role */
+  fonction(roles){
+    let fonc;
+    if(roles[0]=='ROLE_SuperAdminPartenaire' || roles[0]=='ROLE_AdminPartenaire' || roles[0]=='ROLE_AdminWari' || roles[0]=='ROLE_SuperAdminWari'){
+      fonc='Administrateur';
+    }
+    else if(roles[0]=='ROLE_Caissier'){
+      fonc='Caissier';
+    }
+    else if(roles[0]=='ROLE_UserSimple'){
+      fonc='Utilisateur';
+    }
+    return fonc;
+  }
+  /** Affiche detail */
+  onSelect(user){
+    //this.router.navigate(['/users',user.id])
+    console.log(user)
+    this.dialog.open(UserDetailsComponent,{data:user})
+  }
   isAuthenticated(){
     return this.auth.isAuthenticated()
     }

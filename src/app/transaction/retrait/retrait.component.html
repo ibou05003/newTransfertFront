@@ -1,137 +1,180 @@
-<app-header></app-header>
-<div class="alert alert-success" *ngIf="msg">
-    {{ msg }}
-</div>
-<div class="alert alert-danger" *ngIf="errorMsg">
-    {{ errorMsg }}
-</div>
-<div class="container mt-3">
-    <div class="row">
-        <div class="col-12 text-center">
-            <h1>Retrait ou Remboursement</h1>
-        </div>
-    </div>
-    <div class="row mt-2">
-        <div class="col-12 col-md-6">
-            <div class="row">
-                <form [formGroup]="codeForm" (ngSubmit)="rechercheCode(codeForm.value)">
-                    <div class="col-12">
-                        <label for="">Choisir un type</label>
-                        <br>
-                        <label for="retrait">Retrait</label>
-                        <input type="radio" formControlName="typeRetrait" id="retrait" value="retrait" checked>
-                        <label for="remboursement">Remboursement</label>
-                        <input type="radio" formControlName="typeRetrait" id="remboursement">
-                    </div>
-                    <div class="col-12">
-
-                        <mat-form-field class="full-width">
-                            <input matInput placeholder="Code de retrait" formControlName="code" required>
-                            <mat-error *ngFor="let validation of account_validation_messages.code">
-                                <mat-error class="error-message" *ngIf="codeForm.get('code').hasError(validation.type) && (codeForm.get('code').dirty || codeForm.get('code').touched)">{{validation.message}}</mat-error>
-                            </mat-error>
-                        </mat-form-field>
-                        <button class="btn btn-success" type="submit" [disabled]="!codeForm.valid"><i class="fas fa-search"></i></button>
-
-                    </div>
-                </form>
-            </div>
-            <div class="row mt-5" *ngIf="trans">
-                <div class="col-12">
-                    <div class="row">
-                        <div class="col-12">
-                            <h3>Envoyeur</h3>
-                        </div>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-12 col-md-6">
-                            <mat-form-field class="col-12">
-                                <input matInput disabled placeholder="Prenom Envoyeur" value="{{transaction.prenomEnv}}">
-                            </mat-form-field>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <mat-form-field class="col-12">
-                                <input matInput disabled placeholder="Nom Envoyeur" value="{{transaction.nomEnv}}">
-                            </mat-form-field>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-12 col-md-6">
-                            <mat-form-field class="col-12">
-                                <input matInput disabled placeholder="Telephone Envoyeur" value="{{transaction.telEnv}}">
-                            </mat-form-field>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <mat-form-field class="col-12">
-                                <input matInput disabled placeholder="Montant Envoyé" value="{{transaction.montant}} F CFA">
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <mat-form-field class="col-12">
-                                <input matInput disabled placeholder="Adresse Envoyeur" value="{{transaction.adresseEnv}}">
-                            </mat-form-field>
-                        </div>
-                    </div>
-                </div>
+<div *ngIf="!recu">
+    <app-header></app-header>
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1>Retrait ou Remboursement</h1>
             </div>
         </div>
-        <div class="col-12 col-md-6" *ngIf="trans">
-            <div class="row mt-5">
-                <div class="col-12">
-                    <div class="row">
+        <div class="row mt-2">
+            <div class="col-12 col-md-6">
+                <div class="row">
+                    <form [formGroup]="codeForm" (ngSubmit)="rechercheCode(codeForm.value)">
                         <div class="col-12">
-                            <h3>Bénéficiaire</h3>
+                            <label for="">Choisir un type</label>
+                            <br>
+                            <label for="retrait">Retrait</label>
+                            <input type="radio" formControlName="typeRetrait" id="retrait" value="retrait" checked>
+                            <label for="remboursement">Remboursement</label>
+                            <input type="radio" formControlName="typeRetrait" id="remboursement">
                         </div>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-12 col-md-6">
-                            <mat-form-field class="col-12">
-                                <input matInput disabled placeholder="Prenom Bénéficiaire" value="{{transaction.prenomBenef}}">
+                        <div class="col-12">
+
+                            <mat-form-field class="full-width">
+                                <input matInput placeholder="Code de retrait" formControlName="code" required>
+                                <mat-error *ngFor="let validation of account_validation_messages.code">
+                                    <mat-error class="error-message" *ngIf="codeForm.get('code').hasError(validation.type) && (codeForm.get('code').dirty || codeForm.get('code').touched)">{{validation.message}}</mat-error>
+                                </mat-error>
                             </mat-form-field>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <mat-form-field class="col-12">
-                                <input matInput disabled placeholder="Nom Bénéficiaire" value="{{transaction.nomBenef}}">
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <form [formGroup]="retraitForm" (ngSubmit)="setRetrait(retraitForm.value)">
-                        <div class="row">
-                            <div class="col-12 col-md-6">
-                                <mat-form-field class="col-12">
-                                    <input matInput disabled placeholder="Telephone Bénéficiaire" value="{{transaction.telBenef}}">
-                                </mat-form-field>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <mat-form-field class="col-12">
-                                    <mat-label>Type de Piece</mat-label>
-                                    <span matPrefix><i class="fas fa-user-tag"></i></span>
-                                    <mat-select [(value)]="selected" formControlName="typePieceBenef">
-                                        <mat-option value="cni">Carte Nationale D'identité</mat-option>
-                                        <mat-option value="permis">Permis de Conduire</mat-option>
-                                        <mat-option value="passport">Passport</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <mat-form-field class="col-12">
-                                    <input matInput type="number" min="1000000000000" max="2999999999999" placeholder="Numéro d'identification" formControlName="cniBenef">
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="row text-right">
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-success">Retirer</button>
-                            </div>
+                            <button class="btn btn-success" type="submit" [disabled]="!codeForm.valid"><i class="fas fa-search"></i></button>
+
                         </div>
                     </form>
                 </div>
+                <div class="row mt-5" *ngIf="trans">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-12">
+                                <h3>Envoyeur</h3>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-12 col-md-6">
+                                <mat-form-field class="col-12">
+                                    <input matInput disabled placeholder="Prenom Envoyeur" value="{{transaction.prenomEnv}}">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <mat-form-field class="col-12">
+                                    <input matInput disabled placeholder="Nom Envoyeur" value="{{transaction.nomEnv}}">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <mat-form-field class="col-12">
+                                    <input matInput disabled placeholder="Telephone Envoyeur" value="{{transaction.telEnv}}">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <mat-form-field class="col-12">
+                                    <input matInput disabled placeholder="Montant Envoyé" value="{{transaction.montant}} F CFA">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <mat-form-field class="col-12">
+                                    <input matInput disabled placeholder="Adresse Envoyeur" value="{{transaction.adresseEnv}}">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6" *ngIf="trans">
+                <div class="row mt-5">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-12">
+                                <h3>Bénéficiaire</h3>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-12 col-md-6">
+                                <mat-form-field class="col-12">
+                                    <input matInput disabled placeholder="Prenom Bénéficiaire" value="{{transaction.prenomBenef}}">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <mat-form-field class="col-12">
+                                    <input matInput disabled placeholder="Nom Bénéficiaire" value="{{transaction.nomBenef}}">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <form [formGroup]="retraitForm" (ngSubmit)="setRetrait(retraitForm.value)">
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <mat-form-field class="col-12">
+                                        <input matInput disabled placeholder="Telephone Bénéficiaire" value="{{transaction.telBenef}}">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <mat-form-field class="col-12">
+                                        <mat-label>Type de Piece</mat-label>
+                                        <span matPrefix><i class="fas fa-user-tag"></i></span>
+                                        <mat-select [(value)]="selected" formControlName="typePieceBenef">
+                                            <mat-option value="cni">Carte Nationale D'identité</mat-option>
+                                            <mat-option value="permis">Permis de Conduire</mat-option>
+                                            <mat-option value="passport">Passport</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <mat-form-field class="col-12">
+                                        <input matInput type="number" min="1000000000000" max="2999999999999" placeholder="Numéro d'identification" formControlName="cniBenef">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row text-right">
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-success">Retirer</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+</div>
+<div *ngIf="recu">
+    <fieldset>
+        <legend>{{transaction.compteRet.partenaire.raisonSociale}}</legend>
+        <h3>Reçu de retrait</h3>
+        <p>
+            Agence: &emsp; {{transaction.compteRet.partenaire.raisonSociale}} &emsp; Guichetier : &emsp; {{transaction.user.nomComplet}} <br> Date:
+        </p>
+        <fieldset>
+            <legend>Envoyeur</legend>
+            <p>
+                Pays: &emsp; Sénégal &emsp; Cellulaire : &emsp; {{transaction.telEnv}} <br> Prenom: &emsp; {{transaction.prenomEnv}} &emsp; Nom: {{transaction.nomEnv}} <br> Adresse: &emsp; {{transaction.adresseEnv}}
+            </p>
+        </fieldset>
+        <fieldset>
+            <legend>Bénéficiaire</legend>
+            <p>
+                Pays: &emsp; Sénégal &emsp; Cellulaire : &emsp; {{transaction.telBenef}} <br> Prenom: &emsp; {{transaction.prenomBenef}} &emsp; Nom: {{transaction.nomBenef}} <br> Type de piece: {{transaction.typePieceBenef}} &emsp; Numero: &emsp; {{transaction.cniBenef}}
+                <br>
+            </p>
+        </fieldset>
+    </fieldset>
+    <span><u>Caissier</u></span>
+    <span class="droit"><u>Client</u></span>
+
+    <fieldset>
+        <legend>{{transaction.compteRet.partenaire.raisonSociale}}</legend>
+        <h3>Reçu de retrait</h3>
+        <p>
+            Agence: &emsp; {{transaction.compteRet.partenaire.raisonSociale}} &emsp; Guichetier : &emsp; {{transaction.user.nomComplet}} <br> Date:
+        </p>
+        <fieldset>
+            <legend>Envoyeur</legend>
+            <p>
+                Pays: &emsp; Sénégal &emsp; Cellulaire : &emsp; {{transaction.telEnv}} <br> Prenom: &emsp; {{transaction.prenomEnv}} &emsp; Nom: {{transaction.nomEnv}} <br> Adresse: &emsp; {{transaction.adresseEnv}}
+            </p>
+        </fieldset>
+        <fieldset>
+            <legend>Bénéficiaire</legend>
+            <p>
+                Pays: &emsp; Sénégal &emsp; Cellulaire : &emsp; {{transaction.telBenef}} <br> Prenom: &emsp; {{transaction.prenomBenef}} &emsp; Nom: {{transaction.nomBenef}} <br> Type de piece: {{transaction.typePieceBenef}} &emsp; Numero: &emsp; {{transaction.cniBenef}}
+                <br>
+            </p>
+        </fieldset>
+    </fieldset>
+    <span><u>Caissier</u></span>
+    <span class="droit"><u>Client</u></span>
 </div>

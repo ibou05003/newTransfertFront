@@ -48,7 +48,7 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a *ngIf="isSuperAdminWari()  || isAdminWari()" class="dropdown-item" routerLink="/compte/ajout"><i class="fas fa-plus-circle"></i>Ajouter</a>
                     <a *ngIf="isSuperAdminWari()  || isAdminWari() || isAdminPartenaire() || isSuperAdminPartenaire()" class="dropdown-item" routerLink="/compte/list"><i class="fas fa-list"></i>Lister</a>
-                    <a *ngIf="isSuperAdminPartenaire() || isAdminPartenaire()" class="dropdown-item" routerLink="/compte/list"><i class="fas fa-list"></i>Assignation</a>
+                    <a *ngIf="isSuperAdminPartenaire() || isAdminPartenaire()" class="dropdown-item" routerLink="/compte/liste/assign"><i class="fas fa-list"></i>Assignation</a>
                 </div>
             </li>
             <li *ngIf="isCaissier()" class="nav-item dropdown">
@@ -69,14 +69,25 @@
                         <i class="fas fa-exchange-alt acceuil"></i>Envoi</a>
                     <a class="dropdown-item" routerLink="/retrait">
                         <i class="fas fa-money-bill-wave acceuil"></i>Retrait</a>
+                    <a class="dropdown-item" routerLink="/transactions">
+                        <i class="fas fa-list"></i>Liste</a>
+                </div>
+            </li>
+            <li *ngIf="isSuperAdminWari() || isAdminWari()" class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-exchange-alt"></i>Transaction
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" routerLink="/transactionsall">
+                        <i class="fas fa-list"></i>Liste</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="assets/avatar.png" class="rounded-circle" alt="avatar" width="30px">
+                    <img src="{{ img }}" class="rounded-circle" alt="avatar" width="30px" height="30px">
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#"><i class="fas fa-user"></i>Profil</a>
+                    <a class="dropdown-item" routerLink="/profil"><i class="fas fa-user"></i>Profil</a>
                     <a class="dropdown-item" (click)="logout()"><i class="fas fa-sign-out-alt"></i>Déconnexion</a>
                 </div>
             </li>

@@ -3,6 +3,7 @@ import { TransactionService } from 'src/app/service/transaction.service';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Transaction } from 'src/app/interface/transaction';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-retrait',
@@ -18,6 +19,7 @@ export class RetraitComponent implements OnInit {
   selected='cni'
   code=''
   trans=false
+  recu=false
 
   constructor(private transactionService: TransactionService,
               private router: Router) { }
@@ -56,11 +58,24 @@ export class RetraitComponent implements OnInit {
     this.transactionService.setRetrait(this.retraitData,retrait)
       .subscribe(
         res=>{
-          this.msg=res.status
           console.log(res)
+          Swal.fire({
+            type: 'success',
+            text: 'Retrait effectué avec success'
+          })
+          this.transaction=res
+          this.recu=true
+          setTimeout(()=>{
+            window.print();
+          },3000)
         },
         err=>{
           this.errorMsg=err.error.message
+          Swal.fire({
+            type: 'error',
+            title: 'Oops...',
+            text: this.errorMsg
+          })
             console.log(err)
         }
       )

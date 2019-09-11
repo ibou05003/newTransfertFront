@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { MatButtonModule, MatIconModule, MatToolbarModule, MatMenuModule, MatCardModule, MatFormFieldModule, MatInputModule, MatStepperModule, MatTableModule, MatPaginatorModule, MatSortModule, MatSelectModule, MatRadioModule } from '@angular/material';
+import { MatButtonModule, MatIconModule, MatToolbarModule, MatMenuModule, MatCardModule, MatFormFieldModule, MatInputModule, MatStepperModule, MatTableModule, MatPaginatorModule, MatSortModule, MatSelectModule, MatRadioModule, MatSnackBarModule, MatNativeDateModule, MatDatepickerModule, MatTabsModule, MatDialogModule } from '@angular/material';
 import { MatFileUploadModule } from 'angular-material-fileupload';
 
 const MaterialComponents= [
@@ -16,7 +16,12 @@ const MaterialComponents= [
   MatPaginatorModule,
   MatSortModule,
   MatSelectModule,
-  MatRadioModule
+  MatRadioModule,
+  MatSnackBarModule,
+  MatNativeDateModule,
+  MatDatepickerModule,
+  MatTabsModule,
+  MatDialogModule
 ]
 
 

@@ -1,115 +1,111 @@
 <app-header></app-header>
-<div class="alert alert-success" *ngIf="msg">
-    {{ msg }}
-</div>
-<div class="alert alert-danger" *ngIf="errorMsg">
-    {{ errorMsg }}
-</div>
-<form [formGroup]="userForm">
-    <div class="container pt-5">
-        <div class="row">
-            <div class="col-12 text-center">
-                <h1>Ajouter Un Utilisateur</h1>
-            </div>
-        </div>
-        <mat-horizontal-stepper>
-            <div class="col-12 col-md-6 offset-md-3">
-                <div class="container pt-5">
-                    <mat-step label="Informations Utilisateur">
-                        <div class="row">
-                            <div class="col-12 col-md-6">
-                                <mat-form-field class="col-12" hideRequiredMarker>
-                                    <span matPrefix><i class="far fa-address-card"></i></span>
-                                    <input matInput placeholder="Nom Complet" required formControlName="nomComplet">
-                                    <mat-error *ngFor="let validation of account_validation_messages.nom">
-                                        <mat-error class="error-message" *ngIf="userForm.get('nomComplet').hasError(validation.type) && (userForm.get('nomComplet').dirty || userForm.get('nomComplet').touched)">{{validation.message}}</mat-error>
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <mat-form-field class="col-12" hideRequiredMarker>
-                                    <span matPrefix><mat-icon>phone</mat-icon></span>
-                                    <input matInput type="number" min="300000000" max="789999999" placeholder="Entrer le Téléphone" required formControlName="telephone">
-                                    <mat-error *ngFor="let validation of account_validation_messages.telephone">
-                                        <mat-error class="error-message" *ngIf="userForm.get('telephone').hasError(validation.type) && (userForm.get('telephone').dirty || userForm.get('telephone').touched)">{{validation.message}}</mat-error>
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 col-md-6">
-                                <mat-form-field class="col-12" hideRequiredMarker>
-                                    <span matPrefix><i class="far fa-address-card"></i></span>
-                                    <input matInput type="number" min="1000000000000" max="2999999999999" placeholder="Entrer le CNI" required formControlName="cni">
-                                    <mat-error *ngFor="let validation of account_validation_messages.cni">
-                                        <mat-error class="error-message" *ngIf="userForm.get('cni').hasError(validation.type) && (userForm.get('cni').dirty || userForm.get('cni').touched)">{{validation.message}}</mat-error>
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <mat-form-field class="col-12" hideRequiredMarker>
-                                    <span matPrefix><i class="fas fa-at"></i></span>
-                                    <input matInput type="email" placeholder="Entrer l'adresse email" required formControlName="email">
-                                    <mat-error *ngFor="let validation of account_validation_messages.email">
-                                        <mat-error class="error-message" *ngIf="userForm.get('email').hasError(validation.type) && (userForm.get('email').dirty || userForm.get('email').touched)">{{validation.message}}</mat-error>
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 col-md-6">
-                                <mat-form-field class="col-12" hideRequiredMarker>
-                                    <span matPrefix><i class="fas fa-map-marker-alt"></i></span>
-                                    <input matInput placeholder="Entrer l'adresse" required formControlName="adresse">
-                                    <mat-error *ngFor="let validation of account_validation_messages.adresse">
-                                        <mat-error class="error-message" *ngIf="userForm.get('adresse').hasError(validation.type) && (userForm.get('adresse').dirty || userForm.get('adresse').touched)">{{validation.message}}</mat-error>
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <mat-form-field hideRequiredMarker class="col-12">
-                                    <span matPrefix><i class="fas fa-key"></i></span>
-                                    <input matInput formControlName="plainPassword" placeholder="Entrer le Mot de passe" type="password">
-                                    <mat-error *ngFor="let validation of account_validation_messages.plainPassword">
-                                        <mat-error class="error-message" *ngIf="userForm.get('plainPassword').hasError(validation.type) && (userForm.get('plainPassword').dirty || userForm.get('plainPassword').touched)">{{validation.message}}</mat-error>
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 col-md-6">
-                                <mat-form-field class="col-12">
-                                    <mat-label>Choisir un role</mat-label>
-                                    <span matPrefix><i class="fas fa-user-tag"></i></span>
-                                    <mat-select [(value)]="selected" formControlName="role">
-                                        <mat-option *ngIf="isAdminWari() || isSuperAdminWari()" value="1">Administrateur</mat-option>
-                                        <mat-option *ngIf="isAdminWari() || isSuperAdminWari()" value="2">Caissier</mat-option>
-                                        <mat-option *ngIf="isAdminPartenaire() || isSuperAdminPartenaire()" value="3">Administrateur</mat-option>
-                                        <mat-option *ngIf="isAdminPartenaire() || isSuperAdminPartenaire()" value="4">Utilisateur</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <button mat-button matStepperPrevious>Back</button>
-                            <button mat-button matStepperNext>Next</button>
-                        </div>
-                    </mat-step>
-                    <mat-step label="Photo et Validation">
-                        <div class="col-12 col-md-6 offset-md-3 text-center">
-                            <label for="imageFile">Inserer une photo</label>
-                            <img [src]="imageUrl" style="widows: 250px;height:200px" class="rounded-circle">
-                            <input type="file" formControlName="imageFile" #imageFile accept="image/*" (change)="handleFileInput($event.target.files)">
-                            <mat-error *ngFor="let validation of account_validation_messages.imageFile">
-                                <mat-error class="error-message" *ngIf="userForm.get('imageFile').hasError(validation.type) && (userForm.get('imageFile').dirty || userForm.get('imageFile').touched)">{{validation.message}}</mat-error>
-                            </mat-error>
-                        </div>
-                        <div class="text-center mt-4">
-                            <button (click)="setUser()" type="submit" class="btn btn-success" [disabled]="!userForm.valid">Ajouter Utilisateur</button>
-                        </div>
-                    </mat-step>
+<div class="container fond mt-5" style="height: 80vh;">
+    <form [formGroup]="userForm">
+        <div class="container pt-5">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1>Ajouter Un Utilisateur</h1>
                 </div>
             </div>
-        </mat-horizontal-stepper>
-    </div>
-</form>
+            <mat-horizontal-stepper>
+                <div class="col-12 col-md-6 offset-md-3">
+                    <div class="container pt-5">
+                        <mat-step label="Informations Utilisateur">
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <mat-form-field class="col-12" hideRequiredMarker>
+                                        <span matPrefix><i class="far fa-address-card"></i></span>
+                                        <input matInput placeholder="Nom Complet" required formControlName="nomComplet">
+                                        <mat-error *ngFor="let validation of account_validation_messages.nom">
+                                            <mat-error class="error-message" *ngIf="userForm.get('nomComplet').hasError(validation.type) && (userForm.get('nomComplet').dirty || userForm.get('nomComplet').touched)">{{validation.message}}</mat-error>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <mat-form-field class="col-12" hideRequiredMarker>
+                                        <span matPrefix><mat-icon>phone</mat-icon></span>
+                                        <input matInput type="number" min="300000000" max="789999999" placeholder="Entrer le Téléphone" required formControlName="telephone">
+                                        <mat-error *ngFor="let validation of account_validation_messages.telephone">
+                                            <mat-error class="error-message" *ngIf="userForm.get('telephone').hasError(validation.type) && (userForm.get('telephone').dirty || userForm.get('telephone').touched)">{{validation.message}}</mat-error>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <mat-form-field class="col-12" hideRequiredMarker>
+                                        <span matPrefix><i class="far fa-address-card"></i></span>
+                                        <input matInput type="number" min="1000000000000" max="2999999999999" placeholder="Entrer le CNI" required formControlName="cni">
+                                        <mat-error *ngFor="let validation of account_validation_messages.cni">
+                                            <mat-error class="error-message" *ngIf="userForm.get('cni').hasError(validation.type) && (userForm.get('cni').dirty || userForm.get('cni').touched)">{{validation.message}}</mat-error>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <mat-form-field class="col-12" hideRequiredMarker>
+                                        <span matPrefix><i class="fas fa-at"></i></span>
+                                        <input matInput type="email" placeholder="Entrer l'adresse email" required formControlName="email">
+                                        <mat-error *ngFor="let validation of account_validation_messages.email">
+                                            <mat-error class="error-message" *ngIf="userForm.get('email').hasError(validation.type) && (userForm.get('email').dirty || userForm.get('email').touched)">{{validation.message}}</mat-error>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <mat-form-field class="col-12" hideRequiredMarker>
+                                        <span matPrefix><i class="fas fa-map-marker-alt"></i></span>
+                                        <input matInput placeholder="Entrer l'adresse" required formControlName="adresse">
+                                        <mat-error *ngFor="let validation of account_validation_messages.adresse">
+                                            <mat-error class="error-message" *ngIf="userForm.get('adresse').hasError(validation.type) && (userForm.get('adresse').dirty || userForm.get('adresse').touched)">{{validation.message}}</mat-error>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <mat-form-field hideRequiredMarker class="col-12">
+                                        <span matPrefix><i class="fas fa-key"></i></span>
+                                        <input matInput formControlName="plainPassword" placeholder="Entrer le Mot de passe" type="password">
+                                        <mat-error *ngFor="let validation of account_validation_messages.plainPassword">
+                                            <mat-error class="error-message" *ngIf="userForm.get('plainPassword').hasError(validation.type) && (userForm.get('plainPassword').dirty || userForm.get('plainPassword').touched)">{{validation.message}}</mat-error>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <mat-form-field class="col-12">
+                                        <mat-label>Choisir un role</mat-label>
+                                        <span matPrefix><i class="fas fa-user-tag"></i></span>
+                                        <mat-select [(value)]="selected" formControlName="role">
+                                            <mat-option *ngIf="isAdminWari() || isSuperAdminWari()" value="1">Administrateur</mat-option>
+                                            <mat-option *ngIf="isAdminWari() || isSuperAdminWari()" value="2">Caissier</mat-option>
+                                            <mat-option *ngIf="isAdminPartenaire() || isSuperAdminPartenaire()" value="3">Administrateur</mat-option>
+                                            <mat-option *ngIf="isAdminPartenaire() || isSuperAdminPartenaire()" value="4">Utilisateur</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <button mat-button matStepperPrevious>Back</button>
+                                <button mat-button matStepperNext>Next</button>
+                            </div>
+                        </mat-step>
+                        <mat-step label="Photo et Validation">
+                            <div class="col-12 col-md-6 offset-md-3 text-center">
+                                <label for="imageFile">Inserer une photo</label>
+                                <img [src]="imageUrl" style="widows: 250px;height:200px" class="rounded-circle">
+                                <input type="file" formControlName="imageFile" #imageFile accept="image/*" (change)="handleFileInput($event.target.files)">
+                                <mat-error *ngFor="let validation of account_validation_messages.imageFile">
+                                    <mat-error class="error-message" *ngIf="userForm.get('imageFile').hasError(validation.type) && (userForm.get('imageFile').dirty || userForm.get('imageFile').touched)">{{validation.message}}</mat-error>
+                                </mat-error>
+                            </div>
+                            <div class="text-center mt-4">
+                                <button (click)="setUser()" type="submit" class="btn btn-success" [disabled]="!userForm.valid">Ajouter Utilisateur</button>
+                            </div>
+                        </mat-step>
+                    </div>
+                </div>
+            </mat-horizontal-stepper>
+        </div>
+    </form>
+</div>

@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { CompteService } from 'src/app/service/compte.service';
 import { Compte } from 'src/app/interface/compte';
+import { Versement } from 'src/app/interface/versement';
+import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-versement-ajout',
@@ -13,6 +15,13 @@ export class VersementAjoutComponent implements OnInit {
   public compteV:Compte
   public versements=[]
   public affiche=false
+
+  displayedColumns: string[] = ['montant', 'dateVersement'];
+  dataSource: MatTableDataSource<Versement>;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+
+
   constructor(private compteService: CompteService) { }
 
   compteForm=new FormGroup({
@@ -47,8 +56,12 @@ export class VersementAjoutComponent implements OnInit {
                 data=>{
                   this.versements=data
                   console.log(data)
+                  this.dataSource = new MatTableDataSource(data);
+                  this.dataSource.paginator = this.paginator;
+                  this.dataSource.sort = this.sort;
                 }
               )
+              
             this.affiche=true
           },
           err=>{
@@ -69,5 +82,12 @@ export class VersementAjoutComponent implements OnInit {
           console.log(err)
         }
     )
+  }
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 }

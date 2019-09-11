@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Partenaire } from 'src/app/interface/partenaire';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { PartenaireService } from 'src/app/service/partenaire.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-partenaire-ajout',
@@ -10,12 +11,15 @@ import { PartenaireService } from 'src/app/service/partenaire.service';
 })
 export class PartenaireAjoutComponent implements OnInit {
 
+  myDate = new Date();
   partenaireData:Partenaire
+  partenaire:Partenaire
   msg=''
   errorMsg=''
-  
+  contrat=false
   constructor(private fb: FormBuilder,
-              private partenaireService: PartenaireService) { }
+              private partenaireService: PartenaireService) {
+               }
 
   imageUrl:string ="assets/defaut.png"
   fileToLoad: File=null
@@ -100,16 +104,25 @@ export class PartenaireAjoutComponent implements OnInit {
     this.partenaireService.setPartenaire(this.partenaireData)
       .subscribe(
         res=>{
-          this.msg=res.status
+          //this.msg=res.status
+          console.log(res)
+          this.partenaire=res
+          Swal.fire({
+            type: 'success',
+            text: 'Partenaire Inscris avec succes'
+          })
+          this.contrat=true
+          setTimeout(()=>{
+            window.print();
+          },3000)
+
         },
         err=>{
           this.errorMsg=err.error.message
-          if(this.errorMsg=='Bad credentials.'){
-            this.errorMsg='Login ou Mot de Passe incorrect'
-          }else{
-            console.log(err)
-            //this.errorMsg=err.error.error.exception[0].message
-          }
+          Swal.fire({
+            type: 'error',
+            text: this.errorMsg
+          })
         }
       )
   }

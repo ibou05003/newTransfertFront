@@ -10,6 +10,7 @@ import { User } from '../interface/user';
 })
 export class HeaderComponent implements OnInit {
 user: User
+img='assets/defaut.png'
   constructor(private auth: AuthService,
               private router: Router){}
   ngOnInit() {
@@ -17,6 +18,9 @@ user: User
     .subscribe(
       data=>{
         this.user =data
+        if(this.user.imageName!='null'){
+          this.img='assets/images/users/'+this.user.imageName
+        }
       },
       err=>{
         this.auth.logout();

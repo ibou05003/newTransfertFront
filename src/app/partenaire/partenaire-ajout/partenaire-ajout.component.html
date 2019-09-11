@@ -1,154 +1,267 @@
-<app-header></app-header>
-<div class="alert alert-success" *ngIf="msg">
-    {{ msg }}
+<div *ngIf="!contrat">
+    <app-header></app-header>
+    <div class="container fond mt-5" style="height: 80vh;">
+        <form [formGroup]="partenaireForm">
+            <div class="container pt-5">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h1>Ajouter Un Partenaire</h1>
+                    </div>
+                </div>
+                <mat-horizontal-stepper>
+                    <div class="col-12 col-md-6 offset-md-3">
+                        <div class="container pt-5">
+                            <mat-step label="Informations Entreprise">
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <mat-form-field class="col-12" hideRequiredMarker>
+                                            <span matPrefix><mat-icon>business</mat-icon></span>
+                                            <input matInput placeholder="Entrer la Raison Sociale" required formControlName="raisonSociale">
+                                            <mat-error *ngFor="let validation of account_validation_messages.raisonSociale">
+                                                <mat-error class="error-message" *ngIf="partenaireForm.get('raisonSociale').hasError(validation.type) && (partenaireForm.get('raisonSociale').dirty || partenaireForm.get('raisonSociale').touched)">{{validation.message}}</mat-error>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <mat-form-field class="col-12" hideRequiredMarker>
+                                            <span matPrefix><mat-icon>business</mat-icon></span>
+                                            <input matInput placeholder="Entrer le NINEA" required formControlName="ninea">
+                                            <mat-error *ngFor="let validation of account_validation_messages.ninea">
+                                                <mat-error class="error-message" *ngIf="partenaireForm.get('ninea').hasError(validation.type) && (partenaireForm.get('ninea').dirty || partenaireForm.get('ninea').touched)">{{validation.message}}</mat-error>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <mat-form-field class="col-12" hideRequiredMarker>
+                                            <span matPrefix><i class="fas fa-map-marker-alt"></i></span>
+                                            <input matInput placeholder="Entrer l'adresse du Siege" required formControlName="adresseSociale">
+                                            <mat-error *ngFor="let validation of account_validation_messages.adresse">
+                                                <mat-error class="error-message" *ngIf="partenaireForm.get('adresseSociale').hasError(validation.type) && (partenaireForm.get('adresseSociale').dirty || partenaireForm.get('adresseSociale').touched)">{{validation.message}}</mat-error>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <mat-form-field class="col-12" hideRequiredMarker>
+                                            <span matPrefix><mat-icon>phone</mat-icon></span>
+                                            <input matInput type="number" min="300000000" max="789999999" placeholder="Entrer le Téléphone du Siège" required formControlName="telephoneSiege">
+                                            <mat-error *ngFor="let validation of account_validation_messages.telephone">
+                                                <mat-error class="error-message" *ngIf="partenaireForm.get('telephoneSiege').hasError(validation.type) && (partenaireForm.get('telephoneSiege').dirty || partenaireForm.get('telephoneSiege').touched)">{{validation.message}}</mat-error>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <mat-form-field class="col-12" hideRequiredMarker>
+                                            <span matPrefix><i class="fas fa-at"></i></span>
+                                            <input matInput type="email" placeholder="Entrer l'adresse mail" required formControlName="emailSiege">
+                                            <mat-error *ngFor="let validation of account_validation_messages.email">
+                                                <mat-error class="error-message" *ngIf="partenaireForm.get('emailSiege').hasError(validation.type) && (partenaireForm.get('emailSiege').dirty || partenaireForm.get('emailSiege').touched)">{{validation.message}}</mat-error>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <mat-form-field class="col-12" hideRequiredMarker>
+                                            <span matPrefix><mat-icon>business</mat-icon></span>
+                                            <textarea matInput placeholder="Description" required formControlName="description"></textarea>
+                                            <mat-error *ngFor="let validation of account_validation_messages.description">
+                                                <mat-error class="error-message" *ngIf="partenaireForm.get('description').hasError(validation.type) && (partenaireForm.get('description').dirty || partenaireForm.get('description').touched)">{{validation.message}}</mat-error>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <button mat-button matStepperNext>Next</button>
+                                </div>
+                            </mat-step>
+                            <mat-step label="Informations Personne de Référence">
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <mat-form-field class="col-12" hideRequiredMarker>
+                                            <span matPrefix><i class="far fa-address-card"></i></span>
+                                            <input matInput placeholder="Nom Complet" required formControlName="nomCompletPersonneRef">
+                                            <mat-error *ngFor="let validation of account_validation_messages.nom">
+                                                <mat-error class="error-message" *ngIf="partenaireForm.get('nomCompletPersonneRef').hasError(validation.type) && (partenaireForm.get('nomCompletPersonneRef').dirty || partenaireForm.get('nomCompletPersonneRef').touched)">{{validation.message}}</mat-error>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <mat-form-field class="col-12" hideRequiredMarker>
+                                            <span matPrefix><mat-icon>phone</mat-icon></span>
+                                            <input matInput type="number" min="300000000" max="789999999" placeholder="Entrer le Téléphone" required formControlName="telephoneRef">
+                                            <mat-error *ngFor="let validation of account_validation_messages.telephone">
+                                                <mat-error class="error-message" *ngIf="partenaireForm.get('telephoneRef').hasError(validation.type) && (partenaireForm.get('telephoneRef').dirty || partenaireForm.get('telephoneRef').touched)">{{validation.message}}</mat-error>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <mat-form-field class="col-12" hideRequiredMarker>
+                                            <span matPrefix><i class="far fa-address-card"></i></span>
+                                            <input matInput type="number" min="1000000000000" max="2999999999999" placeholder="Entrer le CNI" required formControlName="cniPersonneRef">
+                                            <mat-error *ngFor="let validation of account_validation_messages.cni">
+                                                <mat-error class="error-message" *ngIf="partenaireForm.get('cniPersonneRef').hasError(validation.type) && (partenaireForm.get('cniPersonneRef').dirty || partenaireForm.get('cniPersonneRef').touched)">{{validation.message}}</mat-error>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <mat-form-field class="col-12" hideRequiredMarker>
+                                            <span matPrefix><i class="fas fa-at"></i></span>
+                                            <input matInput type="email" placeholder="Entrer l'adresse email" required formControlName="emailPersonneRef">
+                                            <mat-error *ngFor="let validation of account_validation_messages.email">
+                                                <mat-error class="error-message" *ngIf="partenaireForm.get('emailPersonneRef').hasError(validation.type) && (partenaireForm.get('emailPersonneRef').dirty || partenaireForm.get('emailPersonneRef').touched)">{{validation.message}}</mat-error>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <mat-form-field class="col-12" hideRequiredMarker>
+                                            <span matPrefix><i class="fas fa-map-marker-alt"></i></span>
+                                            <input matInput placeholder="Entrer l'adresse" required formControlName="adressePersonneRef">
+                                            <mat-error *ngFor="let validation of account_validation_messages.adresse">
+                                                <mat-error class="error-message" *ngIf="partenaireForm.get('adressePersonneRef').hasError(validation.type) && (partenaireForm.get('adressePersonneRef').dirty || partenaireForm.get('adressePersonneRef').touched)">{{validation.message}}</mat-error>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <button mat-button matStepperPrevious>Back</button>
+                                    <button mat-button matStepperNext>Next</button>
+                                </div>
+                            </mat-step>
+                            <mat-step label="Photo et Validation">
+                                <div class="col-12 col-md-6 offset-md-3 text-center">
+                                    <label for="imageFile">Inserer une photo</label>
+                                    <img [src]="imageUrl" style="widows: 250px;height:200px" class="rounded-circle">
+                                    <input type="file" formControlName="imageFile" #imageFile accept="image/*" (change)="handleFileInput($event.target.files)">
+                                    <mat-error *ngFor="let validation of account_validation_messages.imageFile">
+                                        <mat-error class="error-message" *ngIf="partenaireForm.get('imageFile').hasError(validation.type) && (partenaireForm.get('imageFile').dirty || partenaireForm.get('imageFile').touched)">{{validation.message}}</mat-error>
+                                    </mat-error>
+                                </div>
+                                <div class="text-center mt-4">
+                                    <button (click)="setPartenaire()" type="submit" class="btn btn-success" [disabled]="!partenaireForm.valid">Ajouter Partenaire</button>
+                                </div>
+                            </mat-step>
+                        </div>
+                    </div>
+                </mat-horizontal-stepper>
+            </div>
+        </form>
+    </div>
+
 </div>
-<form [formGroup]="partenaireForm">
-    <div class="container pt-5">
+<div *ngIf="contrat" class="blanc">
+    <div class="container">
         <div class="row">
-            <div class="col-12 text-center">
-                <h1>Ajouter Un Partenaire</h1>
+            <div class="offset-10 col-2 image">
+                <img alt="logo" class="rounded float-right" width="100px" height="100px" src="assets/logo.png">
             </div>
         </div>
-        <mat-horizontal-stepper>
-            <div class="col-12 col-md-6 offset-md-3">
-                <div class="container pt-5">
-                    <mat-step label="Informations Entreprise">
-                        <div class="row">
-                            <div class="col-12 col-md-6">
-                                <mat-form-field class="col-12" hideRequiredMarker>
-                                    <span matPrefix><mat-icon>business</mat-icon></span>
-                                    <input matInput placeholder="Entrer la Raison Sociale" required formControlName="raisonSociale">
-                                    <mat-error *ngFor="let validation of account_validation_messages.raisonSociale">
-                                        <mat-error class="error-message" *ngIf="partenaireForm.get('raisonSociale').hasError(validation.type) && (partenaireForm.get('raisonSociale').dirty || partenaireForm.get('raisonSociale').touched)">{{validation.message}}</mat-error>
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <mat-form-field class="col-12" hideRequiredMarker>
-                                    <span matPrefix><mat-icon>business</mat-icon></span>
-                                    <input matInput placeholder="Entrer le NINEA" required formControlName="ninea">
-                                    <mat-error *ngFor="let validation of account_validation_messages.ninea">
-                                        <mat-error class="error-message" *ngIf="partenaireForm.get('ninea').hasError(validation.type) && (partenaireForm.get('ninea').dirty || partenaireForm.get('ninea').touched)">{{validation.message}}</mat-error>
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 col-md-6">
-                                <mat-form-field class="col-12" hideRequiredMarker>
-                                    <span matPrefix><i class="fas fa-map-marker-alt"></i></span>
-                                    <input matInput placeholder="Entrer l'adresse du Siege" required formControlName="adresseSociale">
-                                    <mat-error *ngFor="let validation of account_validation_messages.adresse">
-                                        <mat-error class="error-message" *ngIf="partenaireForm.get('adresseSociale').hasError(validation.type) && (partenaireForm.get('adresseSociale').dirty || partenaireForm.get('adresseSociale').touched)">{{validation.message}}</mat-error>
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <mat-form-field class="col-12" hideRequiredMarker>
-                                    <span matPrefix><mat-icon>phone</mat-icon></span>
-                                    <input matInput type="number" min="300000000" max="789999999" placeholder="Entrer le Téléphone du Siège" required formControlName="telephoneSiege">
-                                    <mat-error *ngFor="let validation of account_validation_messages.telephone">
-                                        <mat-error class="error-message" *ngIf="partenaireForm.get('telephoneSiege').hasError(validation.type) && (partenaireForm.get('telephoneSiege').dirty || partenaireForm.get('telephoneSiege').touched)">{{validation.message}}</mat-error>
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 col-md-6">
-                                <mat-form-field class="col-12" hideRequiredMarker>
-                                    <span matPrefix><i class="fas fa-at"></i></span>
-                                    <input matInput type="email" placeholder="Entrer l'adresse mail" required formControlName="emailSiege">
-                                    <mat-error *ngFor="let validation of account_validation_messages.email">
-                                        <mat-error class="error-message" *ngIf="partenaireForm.get('emailSiege').hasError(validation.type) && (partenaireForm.get('emailSiege').dirty || partenaireForm.get('emailSiege').touched)">{{validation.message}}</mat-error>
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <mat-form-field class="col-12" hideRequiredMarker>
-                                    <span matPrefix><mat-icon>business</mat-icon></span>
-                                    <textarea matInput placeholder="Description" required formControlName="description"></textarea>
-                                    <mat-error *ngFor="let validation of account_validation_messages.description">
-                                        <mat-error class="error-message" *ngIf="partenaireForm.get('description').hasError(validation.type) && (partenaireForm.get('description').dirty || partenaireForm.get('description').touched)">{{validation.message}}</mat-error>
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <button mat-button matStepperNext>Next</button>
-                        </div>
-                    </mat-step>
-                    <mat-step label="Informations Personne de Référence">
-                        <div class="row">
-                            <div class="col-12 col-md-6">
-                                <mat-form-field class="col-12" hideRequiredMarker>
-                                    <span matPrefix><i class="far fa-address-card"></i></span>
-                                    <input matInput placeholder="Nom Complet" required formControlName="nomCompletPersonneRef">
-                                    <mat-error *ngFor="let validation of account_validation_messages.nom">
-                                        <mat-error class="error-message" *ngIf="partenaireForm.get('nomCompletPersonneRef').hasError(validation.type) && (partenaireForm.get('nomCompletPersonneRef').dirty || partenaireForm.get('nomCompletPersonneRef').touched)">{{validation.message}}</mat-error>
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <mat-form-field class="col-12" hideRequiredMarker>
-                                    <span matPrefix><mat-icon>phone</mat-icon></span>
-                                    <input matInput type="number" min="300000000" max="789999999" placeholder="Entrer le Téléphone" required formControlName="telephoneRef">
-                                    <mat-error *ngFor="let validation of account_validation_messages.telephone">
-                                        <mat-error class="error-message" *ngIf="partenaireForm.get('telephoneRef').hasError(validation.type) && (partenaireForm.get('telephoneRef').dirty || partenaireForm.get('telephoneRef').touched)">{{validation.message}}</mat-error>
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 col-md-6">
-                                <mat-form-field class="col-12" hideRequiredMarker>
-                                    <span matPrefix><i class="far fa-address-card"></i></span>
-                                    <input matInput type="number" min="1000000000000" max="2999999999999" placeholder="Entrer le CNI" required formControlName="cniPersonneRef">
-                                    <mat-error *ngFor="let validation of account_validation_messages.cni">
-                                        <mat-error class="error-message" *ngIf="partenaireForm.get('cniPersonneRef').hasError(validation.type) && (partenaireForm.get('cniPersonneRef').dirty || partenaireForm.get('cniPersonneRef').touched)">{{validation.message}}</mat-error>
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <mat-form-field class="col-12" hideRequiredMarker>
-                                    <span matPrefix><i class="fas fa-at"></i></span>
-                                    <input matInput type="email" placeholder="Entrer l'adresse email" required formControlName="emailPersonneRef">
-                                    <mat-error *ngFor="let validation of account_validation_messages.email">
-                                        <mat-error class="error-message" *ngIf="partenaireForm.get('emailPersonneRef').hasError(validation.type) && (partenaireForm.get('emailPersonneRef').dirty || partenaireForm.get('emailPersonneRef').touched)">{{validation.message}}</mat-error>
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <mat-form-field class="col-12" hideRequiredMarker>
-                                    <span matPrefix><i class="fas fa-map-marker-alt"></i></span>
-                                    <input matInput placeholder="Entrer l'adresse" required formControlName="adressePersonneRef">
-                                    <mat-error *ngFor="let validation of account_validation_messages.adresse">
-                                        <mat-error class="error-message" *ngIf="partenaireForm.get('adressePersonneRef').hasError(validation.type) && (partenaireForm.get('adressePersonneRef').dirty || partenaireForm.get('adressePersonneRef').touched)">{{validation.message}}</mat-error>
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <button mat-button matStepperPrevious>Back</button>
-                            <button mat-button matStepperNext>Next</button>
-                        </div>
-                    </mat-step>
-                    <mat-step label="Photo et Validation">
-                        <div class="col-12 col-md-6 offset-md-3 text-center">
-                            <label for="imageFile">Inserer une photo</label>
-                            <img [src]="imageUrl" style="widows: 250px;height:200px" class="rounded-circle">
-                            <input type="file" formControlName="imageFile" #imageFile accept="image/*" (change)="handleFileInput($event.target.files)">
-                            <mat-error *ngFor="let validation of account_validation_messages.imageFile">
-                                <mat-error class="error-message" *ngIf="partenaireForm.get('imageFile').hasError(validation.type) && (partenaireForm.get('imageFile').dirty || partenaireForm.get('imageFile').touched)">{{validation.message}}</mat-error>
-                            </mat-error>
-                        </div>
-                        <div class="text-center mt-4">
-                            <button (click)="setPartenaire()" type="submit" class="btn btn-success" [disabled]="!partenaireForm.valid">Ajouter Partenaire</button>
-                        </div>
-                    </mat-step>
-                </div>
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2>Contrat de prestation de service</h2>
             </div>
-        </mat-horizontal-stepper>
+        </div>
+
+        <p>Entre les soussignés :</p>
+        <p>
+            Raison Sociale <strong> WARI Transfert </strong>, à l'adresse <strong>Dakar Central Park Ex 4c</strong>, NINEA <strong>165748956</strong> <br> Représenté par <strong>Kabirou MBOW</strong>, <strong>PDG de WARI</strong>
+        </p>
+        <p>
+            Ci-après désigné « le Prestataire » D’une part,
+        </p>
+        <p>Et :</p>
+        <p>
+            Raison sociale <strong> {{ partenaire.raisonSociale }} </strong>, à l'adresse <strong> {{ partenaire.adresseSociale }} </strong>, NINEA <strong> {{ partenaire.ninea }} </strong> <br> Représenté par <strong> {{ partenaire.nomCompletPersonneRef }} </strong>            , CNI <strong>{{ partenaire.cniPersonneRef }} </strong>
+        </p>
+        <p>
+            Ci-après désigné « le Partenaire » D’autre part,
+        </p>
+        <p>Il a été arrêté et convenu ce qui suit :</p>
+        <h3>Article un - Nature de la mission</h3>
+        <p>
+            Le stratégie du client s’inscrit dans une dynamique d’offres de services du quotidien, simples, adaptées, rapides et sûres, et destinées au grand public, dans sa diversité de profils socio-économiques ou de lieux d’habitation.
+        </p>
+        <p>
+            Le cas échéant :
+        </p>
+        <p>
+            Dans le cadre de cette mission, le Prestataire s'engage à mettre ses collaborateurs à la disposition du Client si cela est nécessaire pour la bonne exécution de la mission. Cependant, lesdits salariés resteront sous l'autorité et sous la responsabilité
+            du Prestataire pendant leur intervention chez le Client.
+        </p>
+        <h3>Article deux - Prix et modalités de paiement</h3>
+        <p>
+            Les commissions sont répartis comme suit :
+            <br> Pour chaque transaction :
+            <br>
+            <ul>
+                <li>
+                    L’État prend les 30%
+                </li>
+                <li>
+                    Le système WARI : 40%
+                </li>
+            </ul>
+
+            <p>
+                Pour le client les 30% sont répartis comme suit :
+                <br>
+                <ul>
+                    <li>
+                        retrait : 20%
+                    </li>
+                    <li>
+                        envoi : 10%
+                    </li>
+                </ul>
+
+                <h3>Article trois - Obligations du Prestataire</h3>
+                <p>
+                    Il est rappelé que le Prestataire est tenu à une obligation de moyens. Il doit donc exécuter sa mission conformément aux règles en vigueur dans sa profession et en se conformant à toutes les données acquises dans son domaine de compétence.
+                </p>
+                <p>
+                    Il reconnaît que le Client lui a donné une information complète sur ses besoins et sur les impératifs à respecter.
+                </p>
+                Il s'engage à se conformer au règlement intérieur et aux consignes de sécurité applicables chez le Client. Enfin, il s’engage à observer la confidentialité la plus totale en ce qui concerne le contenu de la mission et toutes les informations ainsi que
+                tous les documents que le Client lui aura communiqués.
+
+                <h3>Article quatre - Obligations du Client</h3>
+                <p>
+                    Afin de permettre au Prestataire de réaliser la mission dans de bonnes conditions, le Client s’engage à lui remettre tous les documents nécessaires dans les meilleurs délais.
+                </p>
+                <h3>Article cinq – Responsabilité</h3>
+                <p>
+                    La responsabilité du Prestataire ne pourra être mise en cause qu'en cas de manquement à son obligation de moyens. En outre, le Client ne pourra pas l'invoquer dans les cas suivants :
+                    <ul>
+                        <li>s'il a omis de remettre au Prestataire un document ou une information nécessaire pour la mission,
+                        </li>
+                        <li>en cas de force majeure ou d'autres causes indépendantes de la volonté du Prestataire.</li>
+                    </ul>
+
+                    <h3>Article six - Droit applicable et juridiction compétente</h3>
+                    <p>
+                        Le présent contrat est assujetti au droit français. Tout litige qui résulterait de son exécution sera soumis aux tribunaux dont dépend le siège social du Prestataire.
+                    </p>
+                    <p>
+                        Fait le <strong> </strong> en deux exemplaires à <strong>Dakar</strong>
+                    </p>
+                    <div class="row">
+                        <div class="col-6">
+                            Le Prestataire
+                            <br>
+                            <strong>Kabirou MBOW</strong>
+                            <br> [signature]
+                        </div>
+                        <div class="col-6 droit">
+                            Le Partenaire
+                            <br>
+                            <strong>{{ partenaire.nomCompletPersonneRef }}</strong>
+                            <br> [signature]
+                        </div>
+                    </div>
     </div>
-</form>
+</div>

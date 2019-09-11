@@ -1,103 +1,112 @@
 <app-header></app-header>
-<div class="container pt-5">
-    <div class="row text-center">
-        <div class="col-12">
-            <h1>Effectuer Versement</h1>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12 col-md-6 offset-md-3">
+            <form [formGroup]="compteForm" (ngSubmit)="rechercheCompte(compteForm.value)">
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Numero de Compte" formControlName="compte" required>
+                    <mat-error *ngFor="let validation of account_validation_messages.compte">
+                        <mat-error class="error-message" *ngIf="compteForm.get('compte').hasError(validation.type) && (compteForm.get('compte').dirty || compteForm.get('compte').touched)">{{validation.message}}</mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <button class="btn btn-success" type="submit" [disabled]="!compteForm.valid"><i class="fas fa-search"></i></button>
+            </form>
         </div>
     </div>
-    <div class="row">
-        <div class="col-12 col-md-6">
-            <div class="container-fluid">
-                <div class="row">
-                    <h2>Compte</h2>
+    <div class="row" *ngIf="affiche">
+        <div class="col-6">
+            <div class="row">
+                <h1>Informations Partenaire</h1>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <mat-form-field class="col-12">
+                        <input matInput disabled placeholder="Raison Sociale" value="{{compteV.partenaire.raisonSociale}}">
+                    </mat-form-field>
                 </div>
-                <div class="row">
-                    <div class="col-12">
-                        <form [formGroup]="compteForm" (ngSubmit)="rechercheCompte(compteForm.value)">
-                            <mat-form-field class="full-width">
-                                <input matInput placeholder="Numero de Compte" formControlName="compte" required>
-                                <mat-error *ngFor="let validation of account_validation_messages.compte">
-                                    <mat-error class="error-message" *ngIf="compteForm.get('compte').hasError(validation.type) && (compteForm.get('compte').dirty || compteForm.get('compte').touched)">{{validation.message}}</mat-error>
-                                </mat-error>
-                            </mat-form-field>
-                            <button class="btn btn-success" type="submit" [disabled]="!compteForm.valid"><i class="fas fa-search"></i></button>
-                        </form>
-                    </div>
+                <div class="col-12 col-md-6">
+                    <mat-form-field class="col-12">
+                        <input matInput disabled placeholder="NINEA" value="{{compteV.partenaire.ninea}}">
+                    </mat-form-field>
                 </div>
-                <div class="row mt-5" *ngIf="affiche">
-                    <div class="col-12">
-                        <div class="row ">
-                            <div class="col-12">
-                                <h2>Versement</h2>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <form [formGroup]="depotForm" (ngSubmit)="versement(compteForm.value)">
-                                    <mat-form-field class="full-width">
-                                        <input matInput type="number" min="75000" placeholder="Montant à Verser" formControlName="montant" required>
-                                        <mat-error *ngFor="let validation of account_validation_messages.montant">
-                                            <mat-error class="error-message" *ngIf="depotForm.get('montant').hasError(validation.type) && (depotForm.get('montant').dirty || depotForm.get('montant').touched)">{{validation.message}}</mat-error>
-                                        </mat-error>
-                                    </mat-form-field>
-                                    <button class="btn btn-success" type="submit" [disabled]="!depotForm.valid">Verser</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <mat-form-field class="col-12">
+                        <input matInput disabled placeholder="Telephone Siege" value="{{compteV.partenaire.telephoneSiege}}">
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-6">
+                    <mat-form-field class="col-12">
+                        <input matInput disabled placeholder="Email Siege" value="{{compteV.partenaire.emailSiege}}">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <mat-form-field class="col-12">
+                        <input matInput disabled placeholder="Adresse Siege" value="{{compteV.partenaire.adresseSociale}}">
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-6">
+                    <mat-form-field class="col-12">
+                        <input matInput disabled placeholder="Solde Actuelle" value="{{ compteV.solde }} F CFA">
+                    </mat-form-field>
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-6" *ngIf="affiche">
-            <div class="container-fluid">
-                <div class="row text-center text-primary">
-                    <div class="col-12">
-                        <h2>Partenaire</h2>
-                    </div>
+        <div class="col-6">
+            <div class="row">
+                <div class="col-12">
+                    <h1>Historique Versements</h1>
                 </div>
-                <div class="row">
-                    <div class="col-12">
-                        <table>
-                            <tr>
-                                <td>Raison Sociale : </td>
-                                <td>{{ compteV.partenaire.raisonSociale }}</td>
-                            </tr>
-                            <tr>
-                                <td>NINEA : </td>
-                                <td>{{ compteV.partenaire.ninea }}</td>
-                            </tr>
-                            <tr>
-                                <td>Adresse : </td>
-                                <td>{{ compteV.partenaire.adresseSociale }}</td>
-                            </tr>
-                            <tr>
-                                <td>Téléphone : </td>
-                                <td>{{ compteV.partenaire.telephoneSiege }}</td>
+                <div class="col-12">
+                    <div class="container">
+                        <div class="row bg-dark">
+                            <div class="offset-9 col-3">
+                                <mat-form-field>
+                                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Rechercher">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mat-elevation-z8">
+                        <table mat-table [dataSource]="dataSource" matSort>
+
+
+                            <!-- rs Column -->
+                            <ng-container matColumnDef="montant">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Montant </th>
+                                <td mat-cell *matCellDef="let row"> {{row.montant}} </td>
+                            </ng-container>
+
+                            <!-- ninea Column -->
+
+                            <ng-container matColumnDef="dateVersement">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Date Versement </th>
+                                <td mat-cell *matCellDef="let row"> {{row.dateVersement.timestamp | date:'dd-MM-yyyy'}} </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;">
                             </tr>
                         </table>
+
+                        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-12 text-center text-big text-primary">
-                        Solde: {{ compteV.solde }} F CFA
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col text-center text-primary">
-                        <h3>Historique versements</h3>
-                    </div>
-                    <div class="col-12">
-                        <table class="table table-stripped">
-                            <tr>
-                                <td>Date Versement</td>
-                                <td>Montant Versé</td>
-                            </tr>
-                            <tr *ngFor="let versement of versements">
-                                <td>{{ versement.dateVersement | date : 'short' }}</td>
-                                <td>{{ versement.montant }}</td>
-                            </tr>
-                        </table>
-                    </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <form [formGroup]="depotForm" (ngSubmit)="versement(compteForm.value)">
+                        <mat-form-field class="full-width">
+                            <input matInput type="number" min="75000" placeholder="Montant à Verser" formControlName="montant" required>
+                            <mat-error *ngFor="let validation of account_validation_messages.montant">
+                                <mat-error class="error-message" *ngIf="depotForm.get('montant').hasError(validation.type) && (depotForm.get('montant').dirty || depotForm.get('montant').touched)">{{validation.message}}</mat-error>
+                            </mat-error>
+                        </mat-form-field>
+                        <button class="btn btn-success" type="submit" [disabled]="!depotForm.valid">Verser</button>
+                    </form>
                 </div>
             </div>
         </div>

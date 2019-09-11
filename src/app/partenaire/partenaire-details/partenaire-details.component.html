@@ -1,1 +1,57 @@
-<p>partenaire-details works!</p>
+<mat-dialog-content>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-4 offset-md-4">
+                <img src="assets/defaut.png" alt="img" class="rounded-circle" style="width:100px;height:100px;">
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-12 col-md-6">
+                <mat-form-field class="col-12">
+                    <input matInput disabled placeholder="Raison Sociale" value="{{data.raisonSociale}}">
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-6">
+                <mat-form-field class="col-12">
+                    <input matInput disabled placeholder="NINEA" value="{{data.ninea}}">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <mat-form-field class="col-12">
+                    <input matInput disabled placeholder="Telephone Siege" value="{{data.telephoneSiege}}">
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-6">
+                <mat-form-field class="col-12">
+                    <input matInput disabled placeholder="Adresse Siege" value="{{data.adresseSociale}}">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <mat-form-field class="col-12">
+                    <input matInput disabled placeholder="Persone de Reference" value="{{data.nomCompletPersonneRef}}">
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-6">
+                <mat-form-field class="col-12">
+                    <input matInput disabled placeholder="CNI" value="{{data.cniPersonneRef}}">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <mat-form-field class="col-12">
+                    <input matInput disabled placeholder="Adresse" value="{{data.adressePersonneRef}}">
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-6">
+                <mat-form-field class="col-12">
+                    <input matInput disabled placeholder="Telephone" value="{{data.telephoneRef}}">
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>

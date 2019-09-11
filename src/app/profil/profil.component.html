@@ -1,0 +1,48 @@
+<app-header></app-header>
+<div class="container fond mt-5" style="min-height: 80vh;">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-4 offset-md-4 text-center">
+                <img src="{{ img }}" alt="img" class="rounded-circle" style="width:100px;height:100px;">
+                <br>
+                <span>{{ fonction(data.roles) }}</span>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-12 col-md-6">
+                <mat-form-field class="col-12">
+                    <input matInput disabled placeholder="Email" value="{{data.email}}">
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-6">
+                <mat-form-field class="col-12">
+                    <input matInput disabled placeholder="Nom Complet" value="{{data.nomComplet}}">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <mat-form-field class="col-12">
+                    <input matInput disabled placeholder="Telephone" value="{{data.telephone}}">
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-6">
+                <mat-form-field class="col-12">
+                    <input matInput disabled placeholder="CNI" value="{{data.cni}}">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <mat-form-field class="col-12">
+                    <input matInput disabled placeholder="Role" value="{{fonction(data.roles)}}">
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-6">
+                <mat-form-field class="col-12">
+                    <input matInput disabled placeholder="Adresse" value="{{data.adresse}}">
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+</div>

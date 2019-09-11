@@ -3,6 +3,8 @@ import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms'
 import { AuthService } from 'src/app/service/auth.service';
 import { PasswordValidator } from 'src/app/class/password-validator';
 import { User } from 'src/app/interface/user';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-update-password',
@@ -14,7 +16,8 @@ export class UpdatePasswordComponent implements OnInit {
   public user : User
   msg=''
   constructor(private fb: FormBuilder,
-    private auth: AuthService) { }
+              private auth: AuthService,
+              private router: Router) { }
 
     passwordForm=new FormGroup({
       plainPassword: new FormControl('', Validators.compose([
@@ -48,6 +51,11 @@ export class UpdatePasswordComponent implements OnInit {
           .subscribe(
             res=>{
               this.msg=res.status
+              this.router.navigate(['/'])
+              Swal.fire({
+                type: 'success',
+                text: this.msg
+              })
             },
             err=>console.log(err)
           )

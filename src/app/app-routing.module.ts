@@ -16,6 +16,11 @@ import { UserListComponent } from './security/user-list/user-list.component';
 import { UserListSystemeComponent } from './security/user-list-systeme/user-list-systeme.component';
 import { EnvoiComponent } from './transaction/envoi/envoi.component';
 import { RetraitComponent } from './transaction/retrait/retrait.component';
+import { ListComponent } from './transaction/list/list.component';
+import { UserDetailsComponent } from './user-details/user-details.component';
+import { ListUserAffectationComponent } from './compte/list-user-affectation/list-user-affectation.component';
+import { ProfilComponent } from './profil/profil.component';
+import { ListAllComponent } from './transaction/list-all/list-all.component';
 
 
 const routes: Routes = [
@@ -38,6 +43,9 @@ const routes: Routes = [
     path: 'users' , component: UserListComponent, canActivate: [AuthGuard]
   },
   {
+    path: 'users/:id' , component: UserDetailsComponent, canActivate: [AuthGuard]
+  },
+  {
     path: 'usersyteme' , component: UserListSystemeComponent, canActivate: [AuthGuard]
   },
   {
@@ -53,13 +61,28 @@ const routes: Routes = [
     path: 'compte/list' , component: CompteListComponent, canActivate: [AuthGuard]
   },
   {
+    path: 'profil' , component: ProfilComponent, canActivate: [AuthGuard]
+  },
+  {
     path: 'versement/ajout' , component: VersementAjoutComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'compte/liste/assign' , component: ListUserAffectationComponent, canActivate: [AuthGuard]
   },
   {
     path: 'envoi' , component: EnvoiComponent, canActivate: [AuthGuard]
   },
   {
     path: 'retrait' , component: RetraitComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'transactions' , component: ListComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'transactions/:id' , component: ListComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'transactionsall' , component: ListAllComponent, canActivate: [AuthGuard]
   },
   {
     path: 'versement/list' , component: VersementListComponent, canActivate: [AuthGuard]

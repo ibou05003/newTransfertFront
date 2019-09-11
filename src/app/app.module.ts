@@ -33,6 +33,11 @@ import { UpdatePasswordComponent } from './security/update-password/update-passw
 import { UserListComponent } from './security/user-list/user-list.component';
 import { UserListSystemeComponent } from './security/user-list-systeme/user-list-systeme.component'
 import { CompteService } from './service/compte.service';
+import { UserDetailsComponent } from './user-details/user-details.component';
+import { AffectationComponent } from './compte/affectation/affectation.component';
+import { ListUserAffectationComponent } from './compte/list-user-affectation/list-user-affectation.component';
+import { ProfilComponent } from './profil/profil.component';
+import { ListAllComponent } from './transaction/list-all/list-all.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +62,17 @@ import { CompteService } from './service/compte.service';
     PageNotFoundComponent,
     UpdatePasswordComponent,
     UserListComponent,
-    UserListSystemeComponent
+    UserListSystemeComponent,
+    UserDetailsComponent,
+    AffectationComponent,
+    ListUserAffectationComponent,
+    ProfilComponent,
+    ListAllComponent
+  ],
+  entryComponents:[
+    UserDetailsComponent,
+    PartenaireDetailsComponent,
+    AffectationComponent
   ],
   imports: [
     BrowserModule,

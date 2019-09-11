@@ -11,6 +11,9 @@ export class PartenaireService {
 
   private listeUrl="http://localhost:8000/api/partenaire/"
   private ajoutUrl="http://localhost:8000/api/partenaire/ajout"
+  private rechercheUrl="http://localhost:8000/api/partenaire/rechercher"
+  private listePartUrl="http://localhost:8000/api/users/status/partenaire"
+
 
   constructor(private http:HttpClient) { }
   
@@ -35,6 +38,16 @@ export class PartenaireService {
 
     return this.http.post<any>(this.ajoutUrl,formData)
     .pipe(catchError(this.errorHandler))
+  }
+  /**Recherche partenaire par ninea */
+  recherchePartenaire(ninea){
+    console.log(ninea)
+    return this.http.post<any>(this.rechercheUrl,ninea)
+    .pipe(catchError(this.errorHandler))
+  }
+  /**Bloquer Partenaire */
+  bloquer(id){
+    return this.http.get<any>(`${this.listePartUrl}/${id}`);
   }
   errorHandler(error: HttpErrorResponse) {
     return throwError(error)

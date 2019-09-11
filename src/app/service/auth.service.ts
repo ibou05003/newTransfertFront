@@ -17,6 +17,7 @@ export class AuthService {
   private nbcUrl="http://localhost:8000/api/users"
   private listeUrl="http://localhost:8000/api/users/usersysteme"
   private listePartUrl="http://localhost:8000/api/users/userpartenaire"
+  private listeUserUrl="http://localhost:8000/api/users/"
 
   jwt:string
   username:string
@@ -51,6 +52,12 @@ export class AuthService {
     return this.http.get<User[]>(`${this.listePartUrl}/${partenaire.id}`)
     .pipe(catchError(this.errorHandler))
   }
+
+  /**Liste des Utilisateur */
+  getUsers(): Observable<User[]>{
+    return this.http.get<User[]>(this.listeUserUrl)
+    .pipe(catchError(this.errorHandler))
+  }
   /**Ajout Utilisateur */
   setUser(user) {
     const formData:FormData=new FormData()
@@ -65,6 +72,10 @@ export class AuthService {
 
     return this.http.post<any>(this.registerUrl,formData)
     .pipe(catchError(this.errorHandler))
+  }
+  /**Bloquer User */
+  bloquer(id){
+    return this.http.get<any>(`${this.listeUserUrl}status/${id}`);
   }
   errorHandler(error: HttpErrorResponse) {
     return throwError(error)

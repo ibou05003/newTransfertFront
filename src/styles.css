@@ -10,3 +10,19 @@ body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+body {
+    background-image: url("./assets/ta.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.fond {
+    background-color: rgba(250, 246, 246, 0.9);
+    border-radius: 20px;
+}
+
+.blanc {
+    background-color: white;
+}
